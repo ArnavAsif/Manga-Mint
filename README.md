@@ -321,7 +321,7 @@ manga-mint/
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/yourusername/manga-mint.git
+git clone https://github.com/arnavasif/manga-mint.git
 cd manga-mint
 
 # 2. Install Shopify CLI
