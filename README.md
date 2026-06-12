@@ -1,17 +1,17 @@
 <div align="center">
 
-<img src="assets/hero-desktop.png" alt="MangaMart — The Best of Naruto!! Relive the Passion. Collect the Victory." width="100%" />
+<img src="assets/hero-desktop.png" alt="Manga Mint — The Best of Naruto!! Relive the Passion. Collect the Victory." width="100%" />
 
 <br/>
 <br/>
 
 ```
-███╗   ███╗ █████╗ ███╗   ██╗ ██████╗  █████╗ ███╗   ███╗ █████╗ ██████╗ ████████╗
-████╗ ████║██╔══██╗████╗  ██║██╔════╝ ██╔══██╗████╗ ████║██╔══██╗██╔══██╗╚══██╔══╝
-██╔████╔██║███████║██╔██╗ ██║██║  ███╗███████║██╔████╔██║███████║██████╔╝   ██║   
-██║╚██╔╝██║██╔══██║██║╚██╗██║██║   ██║██╔══██║██║╚██╔╝██║██╔══██║██╔══██╗   ██║   
-██║ ╚═╝ ██║██║  ██║██║ ╚████║╚██████╔╝██║  ██║██║ ╚═╝ ██║██║  ██║██║  ██║   ██║   
-╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   
+███╗   ███╗ █████╗ ███╗   ██╗ ██████╗  █████╗     ███╗   ███╗██╗███╗   ██╗████████╗
+████╗ ████║██╔══██╗████╗  ██║██╔════╝ ██╔══██╗    ████╗ ████║██║████╗  ██║╚══██╔══╝
+██╔████╔██║███████║██╔██╗ ██║██║  ███╗███████║    ██╔████╔██║██║██╔██╗ ██║   ██║   
+██║╚██╔╝██║██╔══██║██║╚██╗██║██║   ██║██╔══██║    ██║╚██╔╝██║██║██║╚██╗██║   ██║   
+██║ ╚═╝ ██║██║  ██║██║ ╚████║╚██████╔╝██║  ██║    ██║ ╚═╝ ██║██║██║ ╚████║   ██║   
+╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝   ╚═╝   
 ```
 
 ### 🍊 *Relive the Passion. Collect the Victory.* ⚡
@@ -26,7 +26,7 @@
 
 <br/>
 
-> **MangaMart** is your ultimate destination for authentic manga, anime figures, collectibles, and more.  
+> **Manga Mint** is your ultimate destination for authentic manga, anime figures, collectibles, and more.  
 > From **Naruto** to **Demon Slayer** — shop the universe you love. *100% Authentic. Pure Passion.*
 
 </div>
@@ -59,7 +59,7 @@
 ```
 ╔══════════════════════════════════════════════════════════════════════╗
 ║                                                                      ║
-║   🍊  MANGAMART — FEATURE OVERVIEW                                   ║
+║   🍊  MANGA MINT — FEATURE OVERVIEW                                  ║
 ║                                                                      ║
 ║   ┌────────────────────────────────┬───────────────────────────────┐ ║
 ║   │  🎨  DESIGN & UI               │  ⚙️   STORE FUNCTIONALITY      │ ║
@@ -157,7 +157,7 @@
 ## 📁 Project Structure
 
 ```
-mangamart/
+manga-mint/
 │
 ├── 📂 assets/
 │   ├── 🖼️  hero-desktop.png           # Naruto hero banner — desktop
@@ -321,8 +321,8 @@ mangamart/
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/yourusername/mangamart.git
-cd mangamart
+git clone https://github.com/yourusername/manga-mint.git
+cd manga-mint
 
 # 2. Install Shopify CLI
 npm install -g @shopify/cli @shopify/theme
@@ -377,7 +377,7 @@ git push origin feature/new-anime-section
 ## 📄 License
 
 ```
-MIT License — © 2026 MangaMart
+MIT License — © 2026 Manga Mint
 
 Free to use, modify, and distribute with attribution.
 Built with 🍊 passion for the anime & manga community.
@@ -390,25 +390,25 @@ Built with 🍊 passion for the anime & manga community.
 <div align="center">
 
 ```
- ██████╗ ███████╗██╗     ██╗██╗   ██╗███████╗    ████████╗██╗  ██╗███████╗
-██╔══██╗██╔════╝██║     ██║██║   ██║██╔════╝    ╚══██╔══╝██║  ██║██╔════╝
-██████╔╝█████╗  ██║     ██║██║   ██║█████╗         ██║   ███████║█████╗  
-██╔══██╗██╔══╝  ██║     ██║╚██╗ ██╔╝██╔══╝         ██║   ██╔══██║██╔══╝  
-██║  ██║███████╗███████╗██║ ╚████╔╝ ███████╗        ██║   ██║  ██║███████╗
-╚═╝  ╚═╝╚══════╝╚══════╝╚═╝  ╚═══╝  ╚══════╝        ╚═╝   ╚═╝  ╚═╝╚══════╝
-                                                                            
-██████╗  █████╗ ███████╗███████╗██╗ ██████╗ ███╗   ██╗
-██╔══██╗██╔══██╗██╔════╝██╔════╝██║██╔═══██╗████╗  ██║
-██████╔╝███████║███████╗███████╗██║██║   ██║██╔██╗ ██║
-██╔═══╝ ██╔══██║╚════██║╚════██║██║██║   ██║██║╚██╗██║
-██║     ██║  ██║███████║███████║██║╚██████╔╝██║ ╚████║
-╚═╝     ╚═╝  ╚═╝╚══════╝╚══════╝╚═╝ ╚═════╝ ╚═╝  ╚═══╝
+███╗   ███╗ █████╗ ███╗   ██╗ ██████╗  █████╗ 
+████╗ ████║██╔══██╗████╗  ██║██╔════╝ ██╔══██╗
+██╔████╔██║███████║██╔██╗ ██║██║  ███╗███████║
+██║╚██╔╝██║██╔══██║██║╚██╗██║██║   ██║██╔══██║
+██║ ╚═╝ ██║██║  ██║██║ ╚████║╚██████╔╝██║  ██║
+╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚═╝  ╚═╝
+
+███╗   ███╗██╗███╗   ██╗████████╗
+████╗ ████║██║████╗  ██║╚══██╔══╝
+██╔████╔██║██║██╔██╗ ██║   ██║   
+██║╚██╔╝██║██║██║╚██╗██║   ██║   
+██║ ╚═╝ ██║██║██║ ╚████║   ██║   
+╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝   ╚═╝   
 ```
 
 **Built with 🍊 and ⚡ for every anime fan and manga collector.**
 
-[![GitHub Stars](https://img.shields.io/github/stars/yourusername/mangamart?style=social)](https://github.com/yourusername/mangamart)
-[![Twitter Follow](https://img.shields.io/twitter/follow/mangamartstore?style=social)](https://twitter.com/mangamartstore)
+[![GitHub Stars](https://img.shields.io/github/stars/yourusername/manga-mint?style=social)](https://github.com/yourusername/manga-mint)
+[![Twitter Follow](https://img.shields.io/twitter/follow/manga-mintstore?style=social)](https://twitter.com/manga-mintstore)
 
 <br/>
 
