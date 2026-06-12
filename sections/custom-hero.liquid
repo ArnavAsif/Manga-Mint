@@ -1,0 +1,2071 @@
+{% comment %}
+  CHT MINI — Hero Slider Section (Enhanced Manga Edition)
+  File: sections/cht-hero-slider.liquid
+{% endcomment %}
+
+<style>
+
+  /* ============================================================
+     CHT HERO SLIDER — Enhanced Manga Edition
+     ============================================================ */
+
+  #cht-hero-section {
+    --accent:           {{ section.settings.global_accent_color }};
+    --hero-h-desktop:   {{ section.settings.hero_height_desktop }}px;
+    --hero-h-mobile:    {{ section.settings.hero_height_mobile }}px;
+    position: relative;
+    width: 100%;
+  }
+
+  /* ── Hero stage ── */
+  .cht-hero {
+    position: relative;
+    width: 100%;
+    height: var(--hero-h-desktop);
+    overflow: hidden;
+    background: #0a0a0a;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  /* ── Per-slide accent derivatives ── */
+  .cht-slide {
+    --accent-dark:      color-mix(in srgb, var(--accent) 80%, #000);
+    --accent-glow:      color-mix(in srgb, var(--accent) 40%, transparent);
+  }
+
+  /* ── Manga-style decorative elements ── */
+  .cht-hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.4;
+    animation: cht-pulse-glow 4s ease-in-out infinite alternate;
+  }
+
+  .cht-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    z-index: 60;
+    animation: cht-line-sweep 3s ease-in-out infinite;
+  }
+
+  @keyframes cht-pulse-glow {
+    0% { opacity: 0.2; transform: scale(1); }
+    100% { opacity: 0.5; transform: scale(1.15); }
+  }
+
+  @keyframes cht-line-sweep {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+  }
+
+  /* ── Speed lines overlay ── */
+  .cht-speed-lines {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+    overflow: hidden;
+    opacity: 0.06;
+  }
+
+  .cht-speed-lines::before,
+  .cht-speed-lines::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 1px;
+    background: #fff;
+    transform-origin: center;
+  }
+
+  .cht-speed-lines::before {
+    transform: translate(-50%, -50%) rotate(15deg);
+    box-shadow:
+      0 -80px 0 0 #fff,
+      0 -160px 0 0 #fff,
+      0 -240px 0 0 #fff,
+      0 80px 0 0 #fff,
+      0 160px 0 0 #fff,
+      0 240px 0 0 #fff;
+  }
+
+  .cht-speed-lines::after {
+    transform: translate(-50%, -50%) rotate(-15deg);
+    box-shadow:
+      0 -100px 0 0 #fff,
+      0 -200px 0 0 #fff,
+      0 100px 0 0 #fff,
+      0 200px 0 0 #fff;
+  }
+
+  /* ── Halftone pattern overlay ── */
+  .cht-halftone {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image: radial-gradient(circle, #fff 1px, transparent 1px);
+    background-size: 8px 8px;
+  }
+
+  /* ── Slide ── */
+  .cht-slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0s;
+    pointer-events: none;
+  }
+
+  .cht-slide.is-active {
+    clip-path: inset(0 0% 0 0);
+    pointer-events: auto;
+    transition: clip-path .85s cubic-bezier(.77,0,.18,1);
+    z-index: 2;
+  }
+
+  .cht-slide.is-leaving {
+    clip-path: inset(0 0% 0 100%);
+    pointer-events: none;
+    transition: clip-path .85s cubic-bezier(.77,0,.18,1);
+    z-index: 3;
+  }
+
+  /* ── Slide BG ── */
+  .cht-slide__bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-color: var(--slide-bg, #0a0a0a);
+    transition: transform 6s ease-out;
+  }
+
+  @keyframes cht-ken-burns {
+    0% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+
+  .cht-slide__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  /* ── Manga panel border effect ── */
+  .cht-slide__panel-border {
+    position: absolute;
+    inset: 12px;
+    border: 2px solid rgba(255,255,255,0.06);
+    z-index: 8;
+    pointer-events: none;
+    border-radius: 2px;
+  }
+
+  /* ── Inner layout ── */
+  .cht-slide__inner {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 0 52px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  /* ── Content block ── */
+  .cht-slide__content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 640px;
+  }
+
+  .cht-slide__content--left   { margin-right: auto; align-items: flex-start; text-align: left; }
+  .cht-slide__content--center { margin: 0 auto;     align-items: center;     text-align: center; }
+  .cht-slide__content--right  { margin-left: auto;  align-items: flex-end;   text-align: right; }
+
+  /* ── Eyebrow ── */
+  .cht-slide__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    position: relative;
+    padding: 6px 16px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .cht-slide__eyebrow::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: cht-eyebrow-pulse 1.5s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes cht-eyebrow-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  /* ── Heading ── */
+  .cht-slide__heading {
+    font-family: 'The_Last_Shuriken', sans-serif !important;
+    font-weight: 900;
+    line-height: 1.08;
+    letter-spacing: -.02em;
+    margin-block: 5px;
+    position: relative;
+  }
+
+  .cht-slide__heading .line-normal {
+    display: block;
+    font-size: var(--h-desktop, 62px);
+    color: var(--head-color, #fff);
+    text-transform: uppercase;
+    text-shadow: 0 2px 30px rgba(0,0,0,0.3);
+  }
+
+  .cht-slide__heading .line-accent {
+    display: block;
+    font-size: calc(var(--h-desktop, 62px) * 1.2);
+    color: var(--accent);
+    font-style: italic;
+    text-transform: uppercase;
+    line-height: .95;
+    text-shadow: 0 0 40px var(--accent-glow), 0 4px 20px rgba(0,0,0,0.13);
+    position: relative;
+  }
+
+  /* Manga-style stroke effect on accent text */
+  .cht-slide__heading .line-accent::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -1;
+    -webkit-text-stroke: 3px rgba(255,255,255,0.08);
+    color: transparent;
+  }
+
+  /* Word animation spans */
+  .cht-word {
+    display: inline-block;
+  }
+
+  /* ── Subheading ── */
+  .cht-slide__sub {
+    font-size: var(--sub-desktop, 17px);
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--head-color, #ccc);
+    opacity: .75;
+    max-width: 420px;
+  }
+
+  /* ── Buttons ── */
+  .cht-slide__btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 8px;
+  }
+
+  .cht-slide__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 32px;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 5px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all .3s cubic-bezier(.34,1.56,.64,1);
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cht-slide__btn--primary {
+    background: var(--btn1-bg, var(--accent));
+    color: var(--btn1-color, #fff);
+    border-color: transparent;
+    box-shadow: 0 4px 20px var(--accent-glow);
+  }
+
+  .cht-slide__btn--primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left .5s;
+  }
+
+  .cht-slide__btn--primary:hover::before {
+    left: 100%;
+  }
+
+  .cht-slide__btn--primary:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 12px 35px var(--accent-glow);
+  }
+
+  .cht-slide__btn--ghost {
+    background: rgba(255,255,255,0.06);
+    color: var(--ghost-color, #fff);
+    border-color: rgba(255,255,255,0.2);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .cht-slide__btn--ghost:hover {
+    background: rgba(255,255,255,0.12);
+    transform: translateY(-3px);
+    border-color: rgba(255,255,255,0.4);
+    box-shadow: 0 10px 28px rgba(0,0,0,.3);
+  }
+
+  .cht-slide__btn--ghost .btn-arrow {
+    font-size: 18px;
+    transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+    line-height: 1;
+  }
+
+  .cht-slide__btn--ghost:hover .btn-arrow { transform: translateX(5px); }
+
+  /* ── Feature image ── */
+  .cht-slide__img-wrap {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 55%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 6;
+    overflow: hidden;
+  }
+
+  .cht-slide__img {
+    max-height: 110%;
+    width: auto;
+    object-fit: contain;
+    object-position: bottom center;
+    filter: drop-shadow(0 0 60px rgba(0,0,0,.5)) drop-shadow(0 24px 48px rgba(0,0,0,.3));
+  }
+
+  /* Glow behind feature image */
+  .cht-slide__img-glow {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70%;
+    height: 70%;
+    background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%);
+    border-radius: 50%;
+    opacity: 0.3;
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* ── Rating Badge ── */
+  .cht-badge {
+    position: absolute;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 95px;
+    height: 95px;
+    border-radius: 50%;
+    border: 2px solid var(--badge-border, rgba(255,255,255,.15));
+    background: var(--badge-bg, rgba(0,0,0,.5));
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    gap: 1px;
+    bottom: 28%;
+    right: 44%;
+    box-shadow: 0 8px 32px rgba(0,0,0,.3);
+  }
+
+  .cht-badge__value {
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--badge-text, #fff);
+    line-height: 1;
+  }
+
+  .cht-badge__label {
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--badge-text, #fff);
+    opacity: .6;
+  }
+
+  .cht-badge__stars {
+    font-size: 10px;
+    color: #f5c518;
+    letter-spacing: .04em;
+    margin-top: 1px;
+  }
+
+  /* Badge floating animation */
+  .cht-slide.is-active .cht-badge {
+    animation: cht-badge-in .6s cubic-bezier(.34,1.56,.64,1) .5s forwards,
+               cht-badge-float 3s ease-in-out 1.1s infinite alternate;
+  }
+
+  @keyframes cht-badge-float {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-8px); }
+  }
+
+  /* ── Navigation Controls ── */
+  .cht-hero__arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 50;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,.06);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1.5px solid rgba(255,255,255,.1);
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    transition: all .3s cubic-bezier(.34,1.56,.64,1);
+  }
+
+  .cht-hero__arrow:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    transform: translateY(-50%) scale(1.15);
+    box-shadow: 0 0 25px var(--accent-glow);
+  }
+
+  .cht-hero__arrow svg { width: 20px; height: 20px; }
+  .cht-hero__arrow--prev { left: 20px; }
+  .cht-hero__arrow--next { right: 20px; }
+
+  /* ── Dots ── */
+  .cht-hero__dots {
+    position: absolute;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cht-hero__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 99px;
+    background: rgba(255,255,255,.2);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: all .4s cubic-bezier(.4,0,.2,1);
+    position: relative;
+  }
+
+  .cht-hero__dot.is-active {
+    background: var(--accent);
+    width: 32px;
+    box-shadow: 0 0 12px var(--accent-glow);
+  }
+
+  /* ── Slide counter ── */
+  .cht-hero__counter {
+    position: absolute;
+    bottom: 22px;
+    right: 24px;
+    z-index: 50;
+    font-size: 14px;
+    font-weight: 700;
+    color: rgba(255,255,255,.3);
+    letter-spacing: .1em;
+  }
+
+  .cht-hero__counter-current {
+    color: var(--accent);
+    font-size: 22px;
+  }
+
+  /* ── Progress bar ── */
+  .cht-hero__progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    background: var(--accent);
+    z-index: 61;
+    width: 0%;
+    transition: width 0.1s linear;
+    box-shadow: 0 0 10px var(--accent-glow);
+  }
+
+  .cht-hero__progress.is-running {
+    animation: cht-progress-fill var(--auto-delay, 5s) linear forwards;
+  }
+
+  @keyframes cht-progress-fill {
+    0% { width: 0%; }
+    100% { width: 100%; }
+  }
+
+  /* ════════════════════════════════════
+     ENHANCED ANIMATION SYSTEM
+  ════════════════════════════════════ */
+
+  .cht-anim-child {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .cht-slide.is-active .cht-anim-child {
+    animation: cht-rise .65s cubic-bezier(.22,1,.36,1) forwards;
+  }
+
+  .cht-slide.is-active .cht-anim-child:nth-child(1) { animation-delay: .08s; }
+  .cht-slide.is-active .cht-anim-child:nth-child(2) { animation-delay: .18s; }
+  .cht-slide.is-active .cht-anim-child:nth-child(3) { animation-delay: .35s; }
+  .cht-slide.is-active .cht-anim-child:nth-child(4) { animation-delay: .48s; }
+  .cht-slide.is-active .cht-anim-child:nth-child(5) { animation-delay: .58s; }
+  .cht-slide.is-active .cht-anim-child:nth-child(6) { animation-delay: .68s; }
+
+  @keyframes cht-rise {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .cht-word {
+    opacity: 0;
+    transform: translateY(40px) rotate(2deg);
+    display: inline-block;
+  }
+
+  .cht-slide.is-active .cht-word {
+    animation: cht-word .55s cubic-bezier(.22,1,.36,1) forwards;
+  }
+
+  @keyframes cht-word {
+    from { opacity: 0; transform: translateY(40px) rotate(2deg) scale(0.95); }
+    to   { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
+  }
+
+  /* Enhanced image entrance */
+  .cht-slide__img {
+    opacity: 0;
+    transform: translateX(60px) scale(.92);
+  }
+
+  .cht-slide.is-active .cht-slide__img {
+    animation: cht-img-in .9s cubic-bezier(.22,1,.36,1) .1s forwards;
+  }
+
+  @keyframes cht-img-in {
+    0% { opacity: 0; transform: translateX(60px) scale(.92); }
+    60% { opacity: 1; transform: translateX(-8px) scale(1.02); }
+    100% { opacity: 1; transform: translateX(0) scale(1); }
+  }
+
+  /* Image glow animation */
+  .cht-slide__img-glow {
+    opacity: 0;
+  }
+
+  .cht-slide.is-active .cht-slide__img-glow {
+    animation: cht-glow-in 1s ease .4s forwards;
+  }
+
+  @keyframes cht-glow-in {
+    from { opacity: 0; }
+    to { opacity: 0.3; }
+  }
+
+  /* Badge animation */
+  .cht-badge { opacity: 0; transform: scale(.5) rotate(-10deg); }
+
+  @keyframes cht-badge-in {
+    0% { opacity: 0; transform: scale(.5) rotate(-10deg); }
+    70% { opacity: 1; transform: scale(1.1) rotate(3deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); }
+  }
+
+  /* Panel border animation */
+  .cht-slide__panel-border {
+    opacity: 0;
+  }
+
+  .cht-slide.is-active .cht-slide__panel-border {
+    animation: cht-panel-in .8s ease .2s forwards;
+  }
+
+  @keyframes cht-panel-in {
+    from { opacity: 0; inset: 20px; }
+    to { opacity: 1; inset: 12px; }
+  }
+
+  /* ═══════════════════════════════════
+     SLIDE TRANSITION FLASH EFFECT
+  ═══════════════════════════════════ */
+
+  .cht-flash.is-flashing {
+    animation: cht-flash-fx .4s ease-out forwards;
+  }
+
+  @keyframes cht-flash-fx {
+    0% { opacity: 0.25; }
+    100% { opacity: 0; }
+  }
+
+  /* ════════════════════════════════════
+     INLINE FEATURE ICONS
+  ════════════════════════════════════ */
+  .cht-slide__features {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .cht-feat-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .cht-feat-item__icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--feat-icon-color, var(--accent));
+    flex-shrink: 0;
+    background: rgba(255,255,255,0.04);
+    border-radius: 6px;
+    padding: 4px;
+  }
+
+  .cht-feat-item__icon svg { width: 20px; height: 20px; }
+
+  .cht-feat-item__text { line-height: 1.2; }
+
+  .cht-feat-item__title {
+    display: block;
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--head-color, #fff);
+  }
+
+  .cht-feat-item__sub {
+    display: block;
+    font-size: 11px;
+    color: var(--head-color, #fff);
+    opacity: 0.45;
+  }
+
+  /* ════════════════════════════════════
+     SERVICE BAR
+  ════════════════════════════════════ */
+  .cht-servicebar {
+    background: var(--sb-bg, #111);
+    border-top: 1px solid rgba(255,255,255,.05);
+    padding: 16px 56px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cht-servicebar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0.3;
+  }
+
+  .cht-servicebar__inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .cht-service-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    flex: 1;
+    min-width: max-content;
+  }
+
+  .cht-service-item__icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sb-icon-color, var(--accent));
+    flex-shrink: 0;
+    background: rgba(255,255,255,0.04);
+    border-radius: 8px;
+  }
+
+  .cht-service-item__icon svg { width: 22px; height: 22px; }
+
+  .cht-service-item__text { line-height: 1.25; }
+
+  .cht-service-item__title {
+    display: block;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--sb-text, #fff);
+  }
+
+  .cht-service-item__sub {
+    display: block;
+    font-size: 11.5px;
+    color: var(--sb-sub, #666);
+  }
+
+  /* Divider between service items */
+  .cht-service-divider {
+    width: 1px;
+    height: 28px;
+    background: rgba(255,255,255,0.06);
+    flex-shrink: 0;
+  }
+
+  /* ════════════════════════════════════
+     RESPONSIVE
+  ════════════════════════════════════ */
+  @media (max-width: 900px) {
+    .cht-hero { height: var(--hero-h-mobile); }
+    .cht-slide__inner { padding: 0 22px; }
+
+    .cht-slide__img-wrap { width: 46%; opacity: .55; z-index: 4; }
+
+    .cht-slide__heading .line-normal {
+      font-size: var(--h-mobile, 34px);
+    }
+    .cht-slide__heading .line-accent {
+      font-size: calc(var(--h-mobile, 34px) * 1.2);
+    }
+
+    .cht-slide__sub { font-size: var(--sub-mobile, 14px); }
+
+    .cht-badge { width: 72px; height: 72px; bottom: 22%; right: 40%; }
+    .cht-badge__value { font-size: 18px; }
+
+    .cht-hero__arrow { display: none; }
+    .cht-hero__counter { display: none; }
+
+    .cht-servicebar { padding: 12px 18px; }
+    .cht-servicebar__inner { gap: 16px; justify-content: flex-start; }
+    .cht-service-item__title { font-size: 13px; }
+    .cht-service-item__sub   { font-size: 11px; }
+    .cht-service-divider { display: none; }
+
+    .cht-slide__features { gap: 14px; }
+    .cht-feat-item__title { font-size: 12px; }
+    .cht-feat-item__sub   { font-size: 10px; }
+
+    .cht-slide__panel-border { inset: 6px; }
+    .cht-speed-lines { display: none; }
+
+    /* Mobile BG image switch */
+    .cht-slide__bg.has-mobile-bg {
+      background-image: var(--mobile-bg) !important;
+    }
+  }
+
+  @media (max-width: 540px) {
+    .cht-slide__inner { padding: 0 16px; }
+    .cht-slide__content { gap: 12px; max-width: 100%; }
+    .cht-slide__img-wrap { width: 38%; opacity: .35; }
+    .cht-badge { display: none; }
+    .cht-slide__btns { gap: 8px; }
+    .cht-slide__btn { padding: 12px 20px; font-size: 12px; }
+    .cht-servicebar__inner { gap: 14px; }
+    .cht-service-item__sub { display: none; }
+    .cht-slide__features { gap: 10px; }
+    .cht-feat-item__sub { display: none; }
+    .cht-feat-item__icon { width: 26px; height: 26px; }
+    .cht-feat-item__icon svg { width: 16px; height: 16px; }
+    .cht-slide__panel-border { display: none; }
+    .cht-hero::before { display: none; }
+    .cht-halftone { display: none; }
+    .cht-slide__eyebrow { font-size: 10px; padding: 5px 12px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cht-slide, .cht-slide.is-active, .cht-slide.is-leaving {
+      transition: opacity .25s ease !important;
+      clip-path: none !important;
+    }
+    .cht-anim-child, .cht-word, .cht-slide__img, .cht-badge,
+    .cht-slide__panel-border, .cht-slide__img-glow, .cht-flash {
+      opacity: 1 !important;
+      transform: none !important;
+      animation: none !important;
+    }
+    .cht-hero::before, .cht-hero::after,
+    .cht-slide__eyebrow::before,
+    .cht-hero__progress { animation: none !important; }
+  }
+</style>
+
+{%- assign total_slides = section.blocks | size -%}
+
+<div
+  id="cht-hero-section"
+  style="--accent: {{ section.settings.global_accent_color }};"
+>
+  <!-- ── HERO STAGE ── -->
+  <div class="cht-hero" id="ChtHero" tabindex="0" aria-label="Hero slideshow">
+
+    <!-- Decorative overlays -->
+    <div class="cht-speed-lines" aria-hidden="true"></div>
+    <div class="cht-halftone" aria-hidden="true"></div>
+
+    <!-- Flash effect element -->
+    <div class="cht-flash" id="ChtFlash" aria-hidden="true"></div>
+
+    {%- for block in section.blocks -%}
+      {%- assign pos = block.settings.content_position | default: 'left' -%}
+      {%- assign badge_val = block.settings.badge_value -%}
+      {%- assign has_mobile_bg = false -%}
+      {%- if block.settings.bg_image_mobile != blank -%}
+        {%- assign has_mobile_bg = true -%}
+      {%- endif -%}
+
+      <div
+        class="cht-slide{% if forloop.first %} is-active{% endif %}"
+        data-index="{{ forloop.index0 }}"
+        aria-hidden="{% if forloop.first %}false{% else %}true{% endif %}"
+        style="--accent: {{ block.settings.slide_accent_color | default: section.settings.global_accent_color }};"
+        {{ block.shopify_attributes }}
+      >
+        <!-- BG -->
+        <div
+          class="cht-slide__bg{% if has_mobile_bg %} has-mobile-bg{% endif %}"
+          style="
+            background-color: {{ block.settings.bg_color }};
+            {%- if block.settings.bg_image != blank -%}background-image: url('{{ block.settings.bg_image | img_url: '1920x' }}');{%- endif -%}
+            {%- if has_mobile_bg -%}--mobile-bg: url('{{ block.settings.bg_image_mobile | img_url: '800x' }}');{%- endif -%}
+          "
+        ></div>
+        <div
+          class="cht-slide__overlay"
+          style="background:{{ block.settings.overlay_color }};opacity:{{ block.settings.overlay_opacity | divided_by: 100.0 }};"
+        ></div>
+
+        <!-- Panel border -->
+        <div class="cht-slide__panel-border" aria-hidden="true"></div>
+
+        <!-- CONTENT -->
+        <div class="cht-slide__inner">
+          <div
+            class="cht-slide__content cht-slide__content--{{ pos }}"
+            style="
+              --head-color: {{ block.settings.text_color }};
+              --ghost-color: {{ block.settings.text_color }};
+              --btn1-bg: {{ block.settings.btn1_color }};
+              --btn1-color: {{ block.settings.btn1_text_color }};
+              --h-desktop: {{ block.settings.heading_size_desktop }}px;
+              --h-mobile:  {{ block.settings.heading_size_mobile }}px;
+              --sub-desktop: {{ block.settings.subtext_size_desktop }}px;
+              --sub-mobile:  {{ block.settings.subtext_size_mobile }}px;
+              --feat-icon-color: {{ block.settings.feature_icon_color }};
+            "
+          >
+            {%- if block.settings.eyebrow != blank -%}
+              <span class="cht-slide__eyebrow cht-anim-child">{{ block.settings.eyebrow }}</span>
+            {%- endif -%}
+
+            <h2 class="cht-slide__heading cht-anim-child">
+              {%- if block.settings.heading_line1 != blank -%}
+                <span class="line-normal">
+                  {%- assign words1 = block.settings.heading_line1 | split: ' ' -%}
+                  {%- for w in words1 -%}
+                    <span class="cht-word" style="animation-delay:{{ forloop.index0 | times: 0.08 }}s">{{ w }}</span>
+                    {%- unless forloop.last %}&nbsp;{% endunless %}
+                  {%- endfor -%}
+                </span>
+              {%- endif -%}
+              {%- if block.settings.heading_line2 != blank -%}
+                <span class="line-accent" data-text="{{ block.settings.heading_line2 }}">
+                  {%- assign words2 = block.settings.heading_line2 | split: ' ' -%}
+                  {%- for w in words2 -%}
+                    <span class="cht-word" style="animation-delay:{{ forloop.index0 | times: 0.08 | plus: 0.28 }}s">
+                      {{- w -}}
+                    </span>
+                    {%- unless forloop.last %}&nbsp;{% endunless %}
+                  {%- endfor -%}
+                </span>
+              {%- endif -%}
+            </h2>
+
+            {%- if block.settings.subheading != blank -%}
+              <p class="cht-slide__sub cht-anim-child">{{ block.settings.subheading }}</p>
+            {%- endif -%}
+
+            {%- if block.settings.btn1_label != blank or block.settings.btn2_label != blank -%}
+              <div class="cht-slide__btns cht-anim-child">
+                {%- if block.settings.btn1_label != blank -%}
+                  <a href="{{ block.settings.btn1_url }}" class="cht-slide__btn cht-slide__btn--primary">
+                    {{- block.settings.btn1_label -}}
+                  </a>
+                {%- endif -%}
+                {%- if block.settings.btn2_label != blank -%}
+                  <a href="{{ block.settings.btn2_url }}" class="cht-slide__btn cht-slide__btn--ghost">
+                    {{- block.settings.btn2_label -}}
+                    <span class="btn-arrow">&rsaquo;</span>
+                  </a>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+
+            <!-- ── INLINE FEATURE ICONS ── -->
+            {%- assign has_feat = false -%}
+            {%- for fi in (1..4) -%}
+              {%- liquid
+                case fi
+                  when 1
+                    assign ft = block.settings.feat1_title
+                  when 2
+                    assign ft = block.settings.feat2_title
+                  when 3
+                    assign ft = block.settings.feat3_title
+                  when 4
+                    assign ft = block.settings.feat4_title
+                endcase
+              -%}
+              {%- if ft != blank -%}{%- assign has_feat = true -%}{%- endif -%}
+            {%- endfor -%}
+
+            {%- if has_feat -%}
+              <div class="cht-slide__features cht-anim-child">
+                {%- for fi in (1..4) -%}
+                  {%- liquid
+                    case fi
+                      when 1
+                        assign ft = block.settings.feat1_title
+                        assign fs = block.settings.feat1_sub
+                        assign ficon = block.settings.feat1_icon
+                      when 2
+                        assign ft = block.settings.feat2_title
+                        assign fs = block.settings.feat2_sub
+                        assign ficon = block.settings.feat2_icon
+                      when 3
+                        assign ft = block.settings.feat3_title
+                        assign fs = block.settings.feat3_sub
+                        assign ficon = block.settings.feat3_icon
+                      when 4
+                        assign ft = block.settings.feat4_title
+                        assign fs = block.settings.feat4_sub
+                        assign ficon = block.settings.feat4_icon
+                    endcase
+                  -%}
+
+                  {%- if ft != blank -%}
+                    <div class="cht-feat-item">
+                      <div class="cht-feat-item__icon">
+                        {%- case ficon -%}
+                          {%- when 'shield' -%}
+                            <svg viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7l-9-5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          {%- when 'truck' -%}
+                            <svg viewBox="0 0 24 24" fill="none"><path d="M1 3h15v13H1V3z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M16 8h4l3 3v5h-7V8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="5.5" cy="18.5" r="2.5" stroke="currentColor" stroke-width="1.8"/><circle cx="18.5" cy="18.5" r="2.5" stroke="currentColor" stroke-width="1.8"/></svg>
+                          {%- when 'clock' -%}
+                            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          {%- when 'lock' -%}
+                            <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                          {%- when 'globe' -%}
+                            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                          {%- when 'star' -%}
+                            <svg viewBox="0 0 24 24" fill="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+                          {%- when 'gift' -%}
+                            <svg viewBox="0 0 24 24" fill="none"><path d="M20 12v10H4V12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 7H2v5h20V7z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 22V7" stroke="currentColor" stroke-width="1.8"/><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                          {%- else -%}
+                            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                        {%- endcase -%}
+                      </div>
+                      <div class="cht-feat-item__text">
+                        <span class="cht-feat-item__title">{{ ft }}</span>
+                        {%- if fs != blank -%}
+                          <span class="cht-feat-item__sub">{{ fs }}</span>
+                        {%- endif -%}
+                      </div>
+                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <!-- FEATURE IMAGE -->
+        {%- if block.settings.feature_image != blank -%}
+          <div class="cht-slide__img-wrap">
+            <div class="cht-slide__img-glow" aria-hidden="true" style="background: radial-gradient(ellipse, {{ block.settings.slide_accent_color | default: section.settings.global_accent_color }}40 0%, transparent 70%);"></div>
+            <img
+              src="{{ block.settings.feature_image | img_url: '900x' }}"
+              alt="{{ block.settings.heading_line1 }} {{ block.settings.heading_line2 }}"
+              class="cht-slide__img"
+              width="900"
+              height="900"
+              {% if forloop.first %}loading="eager" fetchpriority="high"{% else %}loading="lazy"{% endif %}
+            >
+          </div>
+        {%- endif -%}
+
+        <!-- BADGE -->
+        {%- if badge_val != blank -%}
+          <div
+            class="cht-badge"
+            style="
+              --badge-bg: {{ block.settings.badge_bg }};
+              --badge-border: {{ block.settings.badge_border_color }};
+              --badge-text: {{ block.settings.badge_text_color }};
+            "
+          >
+            <span class="cht-badge__value">{{ badge_val }}</span>
+            <span class="cht-badge__label">{{ block.settings.badge_label | default: 'Rating' }}</span>
+            <span class="cht-badge__stars">★★★★★</span>
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+
+    <!-- ARROWS -->
+    {%- if total_slides > 1 and section.settings.show_arrows -%}
+      <button class="cht-hero__arrow cht-hero__arrow--prev" id="ChtPrev" aria-label="Previous slide">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <button class="cht-hero__arrow cht-hero__arrow--next" id="ChtNext" aria-label="Next slide">
+        <svg viewBox="0 0 24 24" fill="none">
+          <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    {%- endif -%}
+
+    <!-- DOTS -->
+    {%- if total_slides > 1 and section.settings.show_dots -%}
+      <div class="cht-hero__dots" id="ChtDots" role="tablist">
+        {%- for block in section.blocks -%}
+          <button
+            class="cht-hero__dot{% if forloop.first %} is-active{% endif %}"
+            role="tab"
+            aria-label="Slide {{ forloop.index }}"
+            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            data-index="{{ forloop.index0 }}"
+          ></button>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <!-- COUNTER -->
+    {%- if total_slides > 1 and section.settings.show_counter -%}
+      <div class="cht-hero__counter" id="ChtCounter" aria-hidden="true">
+        <span class="cht-hero__counter-current">01</span> / <span>{{ total_slides | prepend: '0' | slice: -2, 2 }}</span>
+      </div>
+    {%- endif -%}
+
+    <!-- PROGRESS BAR -->
+    {%- if total_slides > 1 and section.settings.autoplay and section.settings.show_progress -%}
+      <div class="cht-hero__progress" id="ChtProgress" style="--auto-delay: {{ section.settings.autoplay_speed }}s;" aria-hidden="true"></div>
+    {%- endif -%}
+  </div>
+  <!-- /.cht-hero -->
+
+  {% comment %} <!-- ── SERVICE BAR ── -->
+  {%- if section.settings.show_service_bar -%}
+    <div
+      class="cht-servicebar"
+      style="
+        --sb-bg: {{ section.settings.service_bar_bg }};
+        --sb-icon-color: {{ section.settings.service_icon_color }};
+        --sb-text: {{ section.settings.service_text_color }};
+        --sb-sub: {{ section.settings.service_sub_color }};
+      "
+    >
+      <div class="cht-servicebar__inner">
+        {%- for si in (1..4) -%}
+          {%- liquid
+            case si
+              when 1
+                assign st = section.settings.service1_title
+                assign ss = section.settings.service1_sub
+                assign sicon = section.settings.service1_icon
+              when 2
+                assign st = section.settings.service2_title
+                assign ss = section.settings.service2_sub
+                assign sicon = section.settings.service2_icon
+              when 3
+                assign st = section.settings.service3_title
+                assign ss = section.settings.service3_sub
+                assign sicon = section.settings.service3_icon
+              when 4
+                assign st = section.settings.service4_title
+                assign ss = section.settings.service4_sub
+                assign sicon = section.settings.service4_icon
+            endcase
+          -%}
+
+          {%- if st != blank -%}
+            {%- if si > 1 -%}
+              <div class="cht-service-divider" aria-hidden="true"></div>
+            {%- endif -%}
+            <div class="cht-service-item">
+              <div class="cht-service-item__icon">
+                {%- case sicon -%}
+                  {%- when 'shield' -%}
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7v5c0 5.25 3.75 10.15 9 11.25C17.25 22.15 21 17.25 21 12V7l-9-5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  {%- when 'truck' -%}
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M1 3h15v13H1V3z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M16 8h4l3 3v5h-7V8z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><circle cx="5.5" cy="18.5" r="2.5" stroke="currentColor" stroke-width="1.8"/><circle cx="18.5" cy="18.5" r="2.5" stroke="currentColor" stroke-width="1.8"/></svg>
+                  {%- when 'clock' -%}
+                    <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  {%- when 'lock' -%}
+                    <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                  {%- when 'globe' -%}
+                    <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                  {%- when 'star' -%}
+                    <svg viewBox="0 0 24 24" fill="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+                  {%- when 'gift' -%}
+                    <svg viewBox="0 0 24 24" fill="none"><path d="M20 12v10H4V12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 7H2v5h20V7z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12 22V7" stroke="currentColor" stroke-width="1.8"/><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  {%- else -%}
+                    <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                {%- endcase -%}
+              </div>
+              <div class="cht-service-item__text">
+                <span class="cht-service-item__title">{{ st }}</span>
+                {%- if ss != blank -%}
+                  <span class="cht-service-item__sub">{{ ss }}</span>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%} {% endcomment %}
+</div>
+
+<script>
+  (function() {
+    'use strict';
+
+    var hero      = document.getElementById('ChtHero');
+    var slides    = hero ? Array.from(hero.querySelectorAll('.cht-slide')) : [];
+    var dots      = Array.from(document.querySelectorAll('.cht-hero__dot'));
+    var prevBtn   = document.getElementById('ChtPrev');
+    var nextBtn   = document.getElementById('ChtNext');
+    var flash     = document.getElementById('ChtFlash');
+    var counter   = document.getElementById('ChtCounter');
+    var progress  = document.getElementById('ChtProgress');
+    var total     = slides.length;
+    if (total <= 1) {
+      if (progress) progress.style.display = 'none';
+      return;
+    }
+
+    var current   = 0;
+    var isAnim    = false;
+    var timer     = null;
+    var autoplay  = {{ section.settings.autoplay | json }};
+    var delay     = {{ section.settings.autoplay_speed | times: 1000 | json }};
+    var dragStartX = 0;
+    var dragging   = false;
+    var THRESH     = 55;
+
+    function pad(n) { return n < 10 ? '0' + n : '' + n; }
+
+    function updateCounter(idx) {
+      if (!counter) return;
+      var cur = counter.querySelector('.cht-hero__counter-current');
+      if (cur) cur.textContent = pad(idx + 1);
+    }
+
+    function resetProgress() {
+      if (!progress) return;
+      progress.classList.remove('is-running');
+      void progress.offsetWidth;
+      if (autoplay) {
+        progress.classList.add('is-running');
+      }
+    }
+
+    function triggerFlash() {
+      if (!flash) return;
+      flash.classList.remove('is-flashing');
+      void flash.offsetWidth;
+      flash.classList.add('is-flashing');
+    }
+
+    function goTo(idx) {
+      if (isAnim) return;
+      idx = ((idx % total) + total) % total;
+      if (idx === current) return;
+
+      isAnim = true;
+      var prev = current;
+      current  = idx;
+
+      triggerFlash();
+
+      slides[prev].classList.remove('is-active');
+      slides[prev].classList.add('is-leaving');
+      slides[prev].setAttribute('aria-hidden', 'true');
+
+      resetAnims(slides[current]);
+
+      requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
+          slides[current].classList.add('is-active');
+          slides[current].setAttribute('aria-hidden', 'false');
+        });
+      });
+
+      var leaving = slides[prev];
+      function onEnd(e) {
+        if (e.propertyName !== 'clip-path') return;
+        leaving.classList.remove('is-leaving');
+        leaving.removeEventListener('transitionend', onEnd);
+        isAnim = false;
+      }
+      leaving.addEventListener('transitionend', onEnd);
+
+      /* Fallback in case transitionend doesn't fire */
+      setTimeout(function() {
+        if (isAnim) {
+          leaving.classList.remove('is-leaving');
+          leaving.removeEventListener('transitionend', onEnd);
+          isAnim = false;
+        }
+      }, 1200);
+
+      dots.forEach(function(d, i) {
+        d.classList.toggle('is-active', i === current);
+        d.setAttribute('aria-selected', String(i === current));
+      });
+
+      updateCounter(current);
+      resetProgress();
+    }
+
+    function resetAnims(slide) {
+      var animated = slide.querySelectorAll('.cht-anim-child, .cht-word, .cht-slide__img, .cht-badge, .cht-slide__panel-border, .cht-slide__img-glow');
+      animated.forEach(function(el) {
+        el.style.animation = 'none';
+        void el.offsetHeight;
+        el.style.animation = '';
+      });
+    }
+
+    function startAuto() {
+      if (!autoplay) return;
+      clearInterval(timer);
+      resetProgress();
+      timer = setInterval(function() { goTo(current + 1); }, delay);
+    }
+
+    function stopAuto() {
+      clearInterval(timer);
+      if (progress) progress.classList.remove('is-running');
+    }
+
+    startAuto();
+    hero.addEventListener('mouseenter', stopAuto);
+    hero.addEventListener('mouseleave', startAuto);
+
+    if (prevBtn) prevBtn.addEventListener('click', function() { stopAuto(); goTo(current - 1); startAuto(); });
+    if (nextBtn) nextBtn.addEventListener('click', function() { stopAuto(); goTo(current + 1); startAuto(); });
+
+    dots.forEach(function(dot) {
+      dot.addEventListener('click', function() {
+        stopAuto();
+        goTo(parseInt(dot.dataset.index, 10));
+        startAuto();
+      });
+    });
+
+    function pStart(e) {
+      dragging   = true;
+      dragStartX = e.touches ? e.touches[0].clientX : e.clientX;
+      stopAuto();
+    }
+
+    function pEnd(e) {
+      if (!dragging) return;
+      dragging = false;
+      var endX  = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+      var delta = endX - dragStartX;
+      if (Math.abs(delta) > THRESH) {
+        delta < 0 ? goTo(current + 1) : goTo(current - 1);
+      }
+      startAuto();
+    }
+
+    hero.addEventListener('mousedown',  pStart);
+    hero.addEventListener('touchstart', pStart, { passive: true });
+    window.addEventListener('mouseup',  pEnd);
+    window.addEventListener('touchend', pEnd);
+
+    hero.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowLeft')  { stopAuto(); goTo(current - 1); startAuto(); }
+      if (e.key === 'ArrowRight') { stopAuto(); goTo(current + 1); startAuto(); }
+    });
+
+    document.addEventListener('visibilitychange', function() {
+      document.hidden ? stopAuto() : startAuto();
+    });
+
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "CHT Hero Slider",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Global"
+    },
+    {
+      "type": "color",
+      "id": "global_accent_color",
+      "label": "Accent color",
+      "default": "#E84C00"
+    },
+    {
+      "type": "header",
+      "content": "Slider size"
+    },
+    {
+      "type": "range",
+      "id": "hero_height_desktop",
+      "label": "Height — Desktop",
+      "min": 340,
+      "max": 800,
+      "step": 10,
+      "unit": "px",
+      "default": 580
+    },
+    {
+      "type": "range",
+      "id": "hero_height_mobile",
+      "label": "Height — Mobile",
+      "min": 300,
+      "max": 650,
+      "step": 10,
+      "unit": "px",
+      "default": 450
+    },
+    {
+      "type": "header",
+      "content": "Autoplay"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Enable autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "Interval (seconds)",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "Controls"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "Show prev/next arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dots",
+      "label": "Show dot navigation",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_counter",
+      "label": "Show slide counter",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_progress",
+      "label": "Show progress bar",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Service bar"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_service_bar",
+      "label": "Show service bar",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "service_bar_bg",
+      "label": "Service bar background",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "service_icon_color",
+      "label": "Icon color",
+      "default": "#E84C00"
+    },
+    {
+      "type": "color",
+      "id": "service_text_color",
+      "label": "Title color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "service_sub_color",
+      "label": "Subtitle color",
+      "default": "#666666"
+    },
+    {
+      "type": "header",
+      "content": "Service item 1"
+    },
+    {
+      "type": "select",
+      "id": "service1_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "shield", "label": "Shield (Verified)" },
+        { "value": "truck", "label": "Truck (Shipping)" },
+        { "value": "clock", "label": "Clock (Support)" },
+        { "value": "lock", "label": "Lock (Secure)" },
+        { "value": "globe", "label": "Globe (Worldwide)" },
+        { "value": "star", "label": "Star (Quality)" },
+        { "value": "gift", "label": "Gift (Offers)" }
+      ],
+      "default": "shield"
+    },
+    {
+      "type": "text",
+      "id": "service1_title",
+      "label": "Title",
+      "default": "100% Authentic"
+    },
+    {
+      "type": "text",
+      "id": "service1_sub",
+      "label": "Subtitle",
+      "default": "Original Manga & Merch"
+    },
+    {
+      "type": "header",
+      "content": "Service item 2"
+    },
+    {
+      "type": "select",
+      "id": "service2_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "shield", "label": "Shield (Verified)" },
+        { "value": "truck", "label": "Truck (Shipping)" },
+        { "value": "clock", "label": "Clock (Support)" },
+        { "value": "lock", "label": "Lock (Secure)" },
+        { "value": "globe", "label": "Globe (Worldwide)" },
+        { "value": "star", "label": "Star (Quality)" },
+        { "value": "gift", "label": "Gift (Offers)" }
+      ],
+      "default": "truck"
+    },
+    {
+      "type": "text",
+      "id": "service2_title",
+      "label": "Title",
+      "default": "Worldwide Shipping"
+    },
+    {
+      "type": "text",
+      "id": "service2_sub",
+      "label": "Subtitle",
+      "default": "Fast & Tracked Delivery"
+    },
+    {
+      "type": "header",
+      "content": "Service item 3"
+    },
+    {
+      "type": "select",
+      "id": "service3_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "shield", "label": "Shield (Verified)" },
+        { "value": "truck", "label": "Truck (Shipping)" },
+        { "value": "clock", "label": "Clock (Support)" },
+        { "value": "lock", "label": "Lock (Secure)" },
+        { "value": "globe", "label": "Globe (Worldwide)" },
+        { "value": "star", "label": "Star (Quality)" },
+        { "value": "gift", "label": "Gift (Offers)" }
+      ],
+      "default": "clock"
+    },
+    {
+      "type": "text",
+      "id": "service3_title",
+      "label": "Title",
+      "default": "24/7 Support"
+    },
+    {
+      "type": "text",
+      "id": "service3_sub",
+      "label": "Subtitle",
+      "default": "Always Here to Help"
+    },
+    {
+      "type": "header",
+      "content": "Service item 4"
+    },
+    {
+      "type": "select",
+      "id": "service4_icon",
+      "label": "Icon",
+      "options": [
+        { "value": "shield", "label": "Shield (Verified)" },
+        { "value": "truck", "label": "Truck (Shipping)" },
+        { "value": "clock", "label": "Clock (Support)" },
+        { "value": "lock", "label": "Lock (Secure)" },
+        { "value": "globe", "label": "Globe (Worldwide)" },
+        { "value": "star", "label": "Star (Quality)" },
+        { "value": "gift", "label": "Gift (Offers)" }
+      ],
+      "default": "lock"
+    },
+    {
+      "type": "text",
+      "id": "service4_title",
+      "label": "Title",
+      "default": "Secure Checkout"
+    },
+    {
+      "type": "text",
+      "id": "service4_sub",
+      "label": "Subtitle",
+      "default": "SSL Encrypted Payments"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Layout"
+        },
+        {
+          "type": "color",
+          "id": "slide_accent_color",
+          "label": "Accent color (overrides global)",
+          "default": "#E84C00"
+        },
+        {
+          "type": "select",
+          "id": "content_position",
+          "label": "Content position",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "header",
+          "content": "Background — Desktop"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background color",
+          "default": "#0a0a0a"
+        },
+        {
+          "type": "image_picker",
+          "id": "bg_image",
+          "label": "Background image (Desktop)"
+        },
+        {
+          "type": "header",
+          "content": "Background — Mobile"
+        },
+        {
+          "type": "image_picker",
+          "id": "bg_image_mobile",
+          "label": "Background image (Mobile)",
+          "info": "Optional. If empty, desktop image will be used."
+        },
+        {
+          "type": "header",
+          "content": "Overlay"
+        },
+        {
+          "type": "color",
+          "id": "overlay_color",
+          "label": "Overlay color",
+          "default": "#000000"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "label": "Overlay opacity",
+          "min": 0,
+          "max": 80,
+          "step": 5,
+          "unit": "%",
+          "default": 25
+        },
+        {
+          "type": "header",
+          "content": "Feature image"
+        },
+        {
+          "type": "image_picker",
+          "id": "feature_image",
+          "label": "Feature / character image"
+        },
+        {
+          "type": "header",
+          "content": "Text"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow label",
+          "default": "Featured Collection"
+        },
+        {
+          "type": "text",
+          "id": "heading_line1",
+          "label": "Heading line 1 (normal color)",
+          "default": "The Best of"
+        },
+        {
+          "type": "text",
+          "id": "heading_line2",
+          "label": "Heading line 2 (accent color + italic)",
+          "default": "Haikyuu!!"
+        },
+        {
+          "type": "range",
+          "id": "heading_size_desktop",
+          "label": "Heading size — Desktop",
+          "min": 28,
+          "max": 96,
+          "step": 2,
+          "unit": "px",
+          "default": 64
+        },
+        {
+          "type": "range",
+          "id": "heading_size_mobile",
+          "label": "Heading size — Mobile",
+          "min": 22,
+          "max": 56,
+          "step": 2,
+          "unit": "px",
+          "default": 36
+        },
+        {
+          "type": "textarea",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "Relive the passion. Collect the victory."
+        },
+        {
+          "type": "range",
+          "id": "subtext_size_desktop",
+          "label": "Subtext size — Desktop",
+          "min": 12,
+          "max": 26,
+          "step": 1,
+          "unit": "px",
+          "default": 17
+        },
+        {
+          "type": "range",
+          "id": "subtext_size_mobile",
+          "label": "Subtext size — Mobile",
+          "min": 12,
+          "max": 20,
+          "step": 1,
+          "unit": "px",
+          "default": 14
+        },
+        {
+          "type": "header",
+          "content": "Buttons"
+        },
+        {
+          "type": "text",
+          "id": "btn1_label",
+          "label": "Primary button label",
+          "default": "Shop Manga"
+        },
+        {
+          "type": "url",
+          "id": "btn1_url",
+          "label": "Primary button URL"
+        },
+        {
+          "type": "color",
+          "id": "btn1_color",
+          "label": "Primary button color",
+          "default": "#E84C00"
+        },
+        {
+          "type": "color",
+          "id": "btn1_text_color",
+          "label": "Primary button text",
+          "default": "#ffffff"
+        },
+        {
+          "type": "text",
+          "id": "btn2_label",
+          "label": "Secondary button label",
+          "default": "Explore Collections"
+        },
+        {
+          "type": "url",
+          "id": "btn2_url",
+          "label": "Secondary button URL"
+        },
+        {
+          "type": "header",
+          "content": "Inline feature icons"
+        },
+        {
+          "type": "color",
+          "id": "feature_icon_color",
+          "label": "Icon color",
+          "default": "#E84C00"
+        },
+        {
+          "type": "header",
+          "content": "Feature icon 1"
+        },
+        {
+          "type": "select",
+          "id": "feat1_icon",
+          "label": "Icon",
+          "options": [
+            { "value": "shield", "label": "Shield (Verified)" },
+            { "value": "truck", "label": "Truck (Shipping)" },
+            { "value": "clock", "label": "Clock (Support)" },
+            { "value": "lock", "label": "Lock (Secure)" },
+            { "value": "globe", "label": "Globe (Worldwide)" },
+            { "value": "star", "label": "Star (Quality)" },
+            { "value": "gift", "label": "Gift (Offers)" }
+          ],
+          "default": "shield"
+        },
+        {
+          "type": "text",
+          "id": "feat1_title",
+          "label": "Title",
+          "default": "100%"
+        },
+        {
+          "type": "text",
+          "id": "feat1_sub",
+          "label": "Subtitle",
+          "default": "Original Products"
+        },
+        {
+          "type": "header",
+          "content": "Feature icon 2"
+        },
+        {
+          "type": "select",
+          "id": "feat2_icon",
+          "label": "Icon",
+          "options": [
+            { "value": "shield", "label": "Shield (Verified)" },
+            { "value": "truck", "label": "Truck (Shipping)" },
+            { "value": "clock", "label": "Clock (Support)" },
+            { "value": "lock", "label": "Lock (Secure)" },
+            { "value": "globe", "label": "Globe (Worldwide)" },
+            { "value": "star", "label": "Star (Quality)" },
+            { "value": "gift", "label": "Gift (Offers)" }
+          ],
+          "default": "truck"
+        },
+        {
+          "type": "text",
+          "id": "feat2_title",
+          "label": "Title",
+          "default": "Worldwide"
+        },
+        {
+          "type": "text",
+          "id": "feat2_sub",
+          "label": "Subtitle",
+          "default": "Shipping"
+        },
+        {
+          "type": "header",
+          "content": "Feature icon 3"
+        },
+        {
+          "type": "select",
+          "id": "feat3_icon",
+          "label": "Icon",
+          "options": [
+            { "value": "shield", "label": "Shield (Verified)" },
+            { "value": "truck", "label": "Truck (Shipping)" },
+            { "value": "clock", "label": "Clock (Support)" },
+            { "value": "lock", "label": "Lock (Secure)" },
+            { "value": "globe", "label": "Globe (Worldwide)" },
+            { "value": "star", "label": "Star (Quality)" },
+            { "value": "gift", "label": "Gift (Offers)" }
+          ],
+          "default": "clock"
+        },
+        {
+          "type": "text",
+          "id": "feat3_title",
+          "label": "Title",
+          "default": "24/7"
+        },
+        {
+          "type": "text",
+          "id": "feat3_sub",
+          "label": "Subtitle",
+          "default": "Customer Support"
+        },
+        {
+          "type": "header",
+          "content": "Feature icon 4"
+        },
+        {
+          "type": "select",
+          "id": "feat4_icon",
+          "label": "Icon",
+          "options": [
+            { "value": "shield", "label": "Shield (Verified)" },
+            { "value": "truck", "label": "Truck (Shipping)" },
+            { "value": "clock", "label": "Clock (Support)" },
+            { "value": "lock", "label": "Lock (Secure)" },
+            { "value": "globe", "label": "Globe (Worldwide)" },
+            { "value": "star", "label": "Star (Quality)" },
+            { "value": "gift", "label": "Gift (Offers)" }
+          ],
+          "default": "lock"
+        },
+        {
+          "type": "text",
+          "id": "feat4_title",
+          "label": "Title",
+          "default": "Secure"
+        },
+        {
+          "type": "text",
+          "id": "feat4_sub",
+          "label": "Subtitle",
+          "default": "Payments"
+        },
+        {
+          "type": "header",
+          "content": "Rating badge"
+        },
+        {
+          "type": "text",
+          "id": "badge_value",
+          "label": "Badge number (leave empty to hide)",
+          "placeholder": "8.45"
+        },
+        {
+          "type": "text",
+          "id": "badge_label",
+          "label": "Badge label",
+          "default": "Rating"
+        },
+        {
+          "type": "color",
+          "id": "badge_bg",
+          "label": "Badge background",
+          "default": "#000000"
+        },
+        {
+          "type": "color",
+          "id": "badge_border_color",
+          "label": "Badge border",
+          "default": "#333333"
+        },
+        {
+          "type": "color",
+          "id": "badge_text_color",
+          "label": "Badge text",
+          "default": "#ffffff"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CHT Hero Slider",
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "bg_color": "#0a0a0a",
+            "overlay_opacity": 25,
+            "text_color": "#ffffff",
+            "eyebrow": "Featured Collection",
+            "heading_line1": "The Best of",
+            "heading_line2": "Haikyuu!!",
+            "subheading": "Relive the passion. Collect the victory.",
+            "btn1_label": "Shop Manga",
+            "btn2_label": "Explore Collections",
+            "feat1_icon": "shield",
+            "feat1_title": "100%",
+            "feat1_sub": "Original Products",
+            "feat2_icon": "truck",
+            "feat2_title": "Worldwide",
+            "feat2_sub": "Shipping",
+            "feat3_icon": "clock",
+            "feat3_title": "24/7",
+            "feat3_sub": "Customer Support",
+            "feat4_icon": "lock",
+            "feat4_title": "Secure",
+            "feat4_sub": "Payments",
+            "badge_value": "8.45",
+            "badge_label": "Rating",
+            "badge_bg": "#000000",
+            "badge_border_color": "#333333",
+            "badge_text_color": "#ffffff"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "bg_color": "#0d0d1a",
+            "overlay_opacity": 25,
+            "text_color": "#ffffff",
+            "slide_accent_color": "#3b82f6",
+            "eyebrow": "New Arrivals",
+            "heading_line1": "Discover",
+            "heading_line2": "One Piece",
+            "subheading": "The greatest adventure continues. Set sail now.",
+            "btn1_label": "Shop Now",
+            "btn1_color": "#3b82f6",
+            "btn2_label": "View All",
+            "feat1_icon": "shield",
+            "feat1_title": "100%",
+            "feat1_sub": "Original Products",
+            "feat2_icon": "truck",
+            "feat2_title": "Worldwide",
+            "feat2_sub": "Shipping",
+            "feat3_icon": "clock",
+            "feat3_title": "24/7",
+            "feat3_sub": "Customer Support",
+            "feat4_icon": "lock",
+            "feat4_title": "Secure",
+            "feat4_sub": "Payments",
+            "badge_bg": "#000000",
+            "badge_border_color": "#333333",
+            "badge_text_color": "#ffffff"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,462 @@
+{% comment %}
+  CHT MINI — Shop By Category Section
+  File: sections/cht-category-slider.liquid
+{% endcomment %}
+
+<style>
+
+#cht-cat-section {
+  --accent:      {{ section.settings.accent_color }};
+  --bg:          {{ section.settings.section_bg }};
+  --card-bg:     {{ section.settings.card_bg }};
+  --title-color: {{ section.settings.title_color }};
+  --sub-color:   {{ section.settings.sub_color }};
+  background: var(--bg);
+  padding: {{ section.settings.section_padding_top }}px 0 {{ section.settings.section_padding_bottom }}px;
+  overflow: hidden; /* Prevents horizontal page scroll */
+}
+
+/* ── Header ── */
+.cht-cat__header {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 52px 130px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cht-cat__heading {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--title-color);
+  margin: 0;
+}
+
+.cht-cat__view-all {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: none;
+  letter-spacing: .04em;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap .2s, opacity .2s;
+}
+.cht-cat__view-all:hover { opacity: .75; gap: 10px; }
+.cht-cat__view-all svg   { width: 16px; height: 16px; flex-shrink: 0; }
+
+/* ── Outer & Track (Desktop Grid) ── */
+.cht-cat__outer {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 52px;
+}
+
+.cht-cat__track-wrap {
+  padding: 10px 0 30px; /* Space for hover shadow */
+}
+
+.cht-cat__track {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* Exactly 5 items per row */
+  gap: 20px;
+}
+
+@media(min-width: 1024px){
+.cht-cat__track {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    column-gap: 28px;
+    row-gap: 100px;
+}
+}
+
+/* ── Card ── */
+.cht-cat__card {
+  max-width: 480px;
+  width: 100%;
+  height: 175px;
+  background: var(--card-bg);
+  border-radius: 20px;
+  padding: 18px 16px 18px 0;
+  display: flex;
+  align-items: center;
+  position: relative;
+  text-decoration: none;
+  border: 1.5px solid rgba(0,0,0,.06);
+  box-shadow: 0 4px 16px rgba(0,0,0,.04);
+  opacity: 0;
+  transform: translateY(24px);
+  transition: border-color .3s, box-shadow .3s, transform .3s;
+}
+
+.cht-cat__card.is-visible {
+  animation: cht-cat-rise .55s cubic-bezier(.22,1,.36,1) forwards;
+}
+
+@keyframes cht-cat-rise {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Hover Effect */
+.cht-cat__card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 16px 35px rgba(0,0,0,.12);
+  transform: translateY(-8px) scale(1.02);
+  z-index: 10;
+}
+
+/* ── Image ── */
+.cht-cat__img-wrap {
+  width: 220px;
+  min-width: 118px;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  position: relative;
+}
+
+.cht-cat__img {
+  max-height: 228px; /* Pops out of the card slightly */
+  max-width: 200px;
+  width: auto;
+  object-fit: contain;
+  object-position: bottom center;
+  display: block;
+  margin-bottom: -4px;
+  filter: drop-shadow(0 10px 18px rgba(0,0,0,.2));
+  transition: transform .4s cubic-bezier(.34,1.56,.64,1);
+}
+
+.cht-cat__card:hover .cht-cat__img {
+  transform: translateY(-10px) scale(1.08);
+}
+
+/* ── Text ── */
+.cht-cat__info {
+  flex: 1;
+  min-width: 0;
+  padding-left: 5px;
+  padding-right: 38px;
+}
+
+.cht-cat__name {
+  display: block;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--title-color);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cht-cat__sub {
+  display: block;
+  font-size: 13.5px;
+  color: var(--sub-color);
+  margin-top: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Arrow circle ── */
+.cht-cat__arrow-btn {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform .3s, box-shadow .3s;
+  box-shadow: 0 4px 12px rgba(0,0,0,.15);
+}
+
+.cht-cat__arrow-btn svg { width: 15px; height: 15px; color: #fff; }
+
+.cht-cat__card:hover .cht-cat__arrow-btn {
+  transform: scale(1.15) translateX(3px);
+  box-shadow: 0 6px 18px rgba(0,0,0,.25);
+}
+
+/* ════════════════════════════════════════
+   RESPONSIVE (Mobile Native Scroll)
+════════════════════════════════════════ */
+@media (max-width: 1200px) {
+  /* Under 1200px, break to 4 items if you want, but for native scroll 1024px is best */
+}
+
+@media (max-width: 1024px) {
+  .cht-cat__header { padding: 0 36px 20px; }
+  .cht-cat__outer  { padding: 0; } /* Remove outer padding to allow edge-to-edge scroll */
+  
+  .cht-cat__track-wrap {
+    padding: 10px 36px 40px; /* Padding acts as container margin */
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Hide scrollbar Firefox */
+  }
+  .cht-cat__track-wrap::-webkit-scrollbar { display: none; /* Hide scrollbar Chrome */ }
+
+  .cht-cat__track {
+    display: flex; /* Switch from Grid to Flex for side-scroll */
+    gap: 16px;
+  }
+
+  .cht-cat__card {
+    flex: 0 0 auto;
+    width: 270px;
+    height: 135px;
+    scroll-snap-align: start;
+  }
+}
+
+@media (max-width: 768px) {
+  .cht-cat__header { padding: 0 16px 16px; }
+  .cht-cat__heading{ font-size: 24px; }
+  
+  .cht-cat__track-wrap { padding: 10px 16px 36px; }
+  
+  .cht-cat__card { width: 250px; height: 125px; }
+  .cht-cat__img-wrap { width: 95px; min-width: 95px; }
+  .cht-cat__img { max-height: 130px; max-width: 85px; }
+  .cht-cat__name { font-size: 17px; }
+}
+
+@media (max-width: 480px) {
+  .cht-cat__header { padding: 0 12px 16px; }
+  .cht-cat__heading{ font-size: 20px; }
+  
+  .cht-cat__track-wrap { padding: 10px 12px 30px; margin-left: 10px}
+
+  .cht-cat__card {
+    width: 230px;
+    height: 115px;
+    padding: 14px 14px 14px 0;
+    border-radius: 16px;
+  }
+  .cht-cat__img-wrap { width: 85px; min-width: 85px; }
+  .cht-cat__img { max-height: 120px; max-width: 75px; margin-bottom: 0; }
+  .cht-cat__name { font-size: 16px; }
+  .cht-cat__sub { font-size: 12px; margin-top: 4px; }
+  .cht-cat__arrow-btn { width: 28px; height: 28px; bottom: 14px; right: 14px; }
+  .cht-cat__arrow-btn svg { width: 13px; height: 13px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cht-cat__card, .cht-cat__card.is-visible {
+    opacity: 1 !important; transform: none !important; animation: none !important;
+  }
+  .cht-cat__card:hover { transform: translateY(-3px) !important; }
+  .cht-cat__img { transition: none !important; }
+}
+</style>
+
+<section id="cht-cat-section">
+
+  <div class="cht-cat__header">
+    <h2 class="cht-cat__heading">{{ section.settings.heading | default: 'Shop By Category' }}</h2>
+    {%- if section.settings.view_all_url != blank -%}
+      <a href="{{ section.settings.view_all_url }}" class="cht-cat__view-all">
+        {{ section.settings.view_all_label | default: 'View All Categories' }}
+        <svg viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    {%- endif -%}
+  </div>
+
+  <div class="cht-cat__outer">
+    <div class="cht-cat__track-wrap">
+      <div class="cht-cat__track">
+        {%- for block in section.blocks -%}
+          <a
+            href="{{ block.settings.category_url | default: '#' }}"
+            class="cht-cat__card"
+            {{ block.shopify_attributes }}
+          >
+            <div class="cht-cat__img-wrap">
+              {%- if block.settings.category_image != blank -%}
+                <img
+                  src="{{ block.settings.category_image | img_url: '400x' }}"
+                  alt="{{ block.settings.category_name }}"
+                  class="cht-cat__img"
+                  loading="lazy"
+                >
+              {%- else -%}
+                <svg class="cht-cat__img" viewBox="0 0 72 90" fill="none" style="opacity:.18;">
+                  <rect x="8" y="10" width="56" height="70" rx="6" fill="#999"/>
+                </svg>
+              {%- endif -%}
+            </div>
+            <div class="cht-cat__info">
+              <span class="cht-cat__name">{{ block.settings.category_name | default: 'Category' }}</span>
+              {%- if block.settings.category_sub != blank -%}
+                <span class="cht-cat__sub">{{ block.settings.category_sub }}</span>
+              {%- endif -%}
+            </div>
+            <div class="cht-cat__arrow-btn" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </a>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- Entrance Animation Script (Only for the fade-up effect) -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const cards = document.querySelectorAll('.cht-cat__card');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  
+  if (!reduced && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (!entry.isIntersecting) return;
+        entry.target.style.animationDelay = (index * 0.08) + 's';
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+      });
+    }, { threshold: 0.1 });
+    cards.forEach(c => io.observe(c));
+  } else {
+    cards.forEach(c => { c.style.opacity = 1; c.style.transform = 'none'; });
+  }
+});
+</script>
+
+{% schema %}
+{
+  "name": "CHT Category Slider",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Shop By Category"
+    },
+    {
+      "type": "url",
+      "id": "view_all_url",
+      "label": "View All link URL"
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View All link text",
+      "default": "View All Categories"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#E84C00"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_bg",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "sub_color",
+      "label": "Subtitle color",
+      "default": "#888888"
+    },
+    {
+      "type": "range",
+      "id": "section_padding_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "section_padding_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "category_image",
+          "label": "Category image"
+        },
+        {
+          "type": "text",
+          "id": "category_name",
+          "label": "Category name",
+          "default": "Manga"
+        },
+        {
+          "type": "text",
+          "id": "category_sub",
+          "label": "Subtitle",
+          "default": "Books & Series"
+        },
+        {
+          "type": "url",
+          "id": "category_url",
+          "label": "Link URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "CHT Category Slider",
+      "blocks": [
+        { "type": "category", "settings": { "category_name": "Manga",        "category_sub": "Books & Series"   } },
+        { "type": "category", "settings": { "category_name": "Figures",      "category_sub": "Collectibles"     } },
+        { "type": "category", "settings": { "category_name": "Posters",      "category_sub": "Wall Art"         } },
+        { "type": "category", "settings": { "category_name": "Apparel",      "category_sub": "Clothing & Wear"  } },
+        { "type": "category", "settings": { "category_name": "Accessories",  "category_sub": "Keychains, Bags"  } }
+      ]
+    }
+  ]
+}
+{% endschema %}

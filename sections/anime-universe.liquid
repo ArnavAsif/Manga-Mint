@@ -1,0 +1,643 @@
+{% style %}
+/* ============================================================
+   CHT Anime Universes — Styles
+   ============================================================ */
+
+.cht-au {
+  --au-bg:              {{ section.settings.section_bg }};
+  --au-heading-color:   {{ section.settings.heading_color }};
+  --au-heading-desk:    {{ section.settings.heading_size_desktop }}px;
+  --au-heading-mob:     {{ section.settings.heading_size_mobile }}px;
+  --au-explore-color:   {{ section.settings.explore_color }};
+  --au-card-radius:     {{ section.settings.card_radius }}px;
+  --au-shop-color:      {{ section.settings.shop_now_color }};
+  --au-shop-size-desk:  {{ section.settings.shop_size_desktop }}px;
+  --au-shop-size-mob:   {{ section.settings.shop_size_mobile }}px;
+  --au-logo-size-desk:  {{ section.settings.logo_height_desktop }}px;
+  --au-logo-size-mob:   {{ section.settings.logo_height_mobile }}px;
+  --au-overlay-start:   {{ section.settings.overlay_start }};
+  --au-overlay-end:     {{ section.settings.overlay_end }};
+  --au-transition:      .3s cubic-bezier(.4,0,.2,1);
+
+  background: var(--au-bg);
+  padding: {{ section.settings.pad_top }}px 0 {{ section.settings.pad_bottom }}px;
+  width: 100%;
+}
+
+/* ── Inner ── */
+.cht-au__inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 52px;
+}
+
+/* ── Header row ── */
+.cht-au__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 36px;
+  gap: 12px;
+}
+
+.cht-au__heading {
+  font-size: var(--au-heading-desk);
+  font-weight: 900;
+  color: var(--au-heading-color);
+  text-transform: uppercase;
+  letter-spacing: -.01em;
+  line-height: 1.1;
+}
+
+.cht-au__explore {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--au-explore-color);
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: gap var(--au-transition), opacity var(--au-transition);
+}
+
+.cht-au__explore:hover { opacity: .75; gap: 8px; }
+
+.cht-au__explore svg {
+  width: 14px;
+  height: 14px;
+  transition: transform var(--au-transition);
+}
+
+.cht-au__explore:hover svg { transform: translateX(3px); }
+
+/* ── Grid ── */
+.cht-au__grid {
+  display: grid;
+  grid-template-columns: repeat({{ section.settings.columns_desktop }}, 1fr);
+  gap: {{ section.settings.card_gap }}px;
+  list-style: none;
+  padding-inline: 0;
+}
+
+/* ── Card ── */
+.cht-au__card {
+  position: relative;
+  border-radius: var(--au-card-radius);
+  overflow: hidden;
+  aspect-ratio: {{ section.settings.card_aspect }};
+  background: #e8e8e8;
+  cursor: pointer;
+  display: block;
+  text-decoration: none;
+}
+
+/* Character image */
+.cht-au__card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  transition: transform .5s cubic-bezier(.4,0,.2,1);
+  will-change: transform;
+}
+
+.cht-au__card:hover .cht-au__card-img {
+  transform: scale(1.06);
+}
+
+/* Gradient overlay */
+.cht-au__card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    var(--au-overlay-end) 0%,
+    var(--au-overlay-start) 100%
+  );
+  transition: opacity var(--au-transition);
+  z-index: 1;
+}
+
+.cht-au__card:hover .cht-au__card-overlay {
+  opacity: 1.15;
+}
+
+/* Card content */
+.cht-au__card-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 14px 14px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Universe logo / title image */
+.cht-au__card-logo {
+  height: var(--au-logo-size-desk);
+  width: auto;
+  object-fit: contain;
+  object-position: left bottom;
+  display: block;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.3));
+  transition: transform var(--au-transition);
+}
+
+.cht-au__card:hover .cht-au__card-logo {
+  transform: translateY(-2px);
+}
+
+/* Text title fallback (when no logo image) */
+.cht-au__card-title {
+  font-size: 20px;
+  font-weight: 900;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: -.01em;
+  line-height: 1.1;
+  text-shadow: 0 2px 8px rgba(0,0,0,.5);
+  font-style: italic;
+}
+
+/* Shop Now */
+.cht-au__shop {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: var(--au-shop-size-desk);
+  font-weight: 700;
+  color: var(--au-shop-color);
+  text-decoration: none;
+  line-height: 1;
+  transition: gap var(--au-transition);
+}
+
+.cht-au__card:hover .cht-au__shop { gap: 7px; }
+
+.cht-au__shop svg {
+  width: 12px;
+  height: 12px;
+  transition: transform var(--au-transition);
+  flex-shrink: 0;
+}
+
+.cht-au__card:hover .cht-au__shop svg { transform: translateX(3px); }
+
+/* ── Skeleton loader (while image loads) ── */
+.cht-au__card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #ececec 25%, #f5f5f5 50%, #ececec 75%);
+  background-size: 200% 100%;
+  animation: cht-au-shimmer 1.5s infinite;
+  z-index: 0;
+}
+
+.cht-au__card.img-loaded::before {
+  display: none;
+}
+
+@keyframes cht-au-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .cht-au__grid {
+    grid-template-columns: repeat({{ section.settings.columns_tablet }}, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .cht-au__inner { padding: 0 14px; }
+
+  .cht-au__heading { font-size: var(--au-heading-mob); }
+
+  .cht-au__grid {
+    grid-template-columns: repeat({{ section.settings.columns_mobile }}, 1fr);
+    gap: {{ section.settings.card_gap | times: 0.65 | round }}px;
+  }
+
+  .cht-au__card-logo  { height: var(--au-logo-size-mob); }
+  .cht-au__shop       { font-size: var(--au-shop-size-mob); }
+
+  .cht-au__card-content { padding: 10px 10px 10px; gap: 4px; }
+  .cht-au__card-title   { font-size: 15px; }
+}
+
+@media (max-width: 400px) {
+  .cht-au__grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cht-au__card-img,
+  .cht-au__card-logo,
+  .cht-au__shop svg,
+  .cht-au__explore svg { transition: none !important; }
+  .cht-au__card::before { animation: none !important; }
+}
+{% endstyle %}
+
+<section class="cht-au" id="ChtAnimeUniverses-{{ section.id }}">
+  <div class="cht-au__inner">
+
+    {%- comment -%} Header {%- endcomment -%}
+    <div class="cht-au__header">
+      <h2 class="cht-au__heading">{{ section.settings.section_heading }}</h2>
+      {%- if section.settings.explore_url != blank and section.settings.show_explore -%}
+        <a href="{{ section.settings.explore_url }}" class="cht-au__explore">
+          {{ section.settings.explore_label | default: 'Explore All Universes' }}
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Universe Cards Grid {%- endcomment -%}
+    <ul class="cht-au__grid" role="list">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'universe_card' -%}
+          {%- liquid
+            assign card_url   = block.settings.card_url | default: '#'
+            assign card_img   = block.settings.card_image
+            assign logo_img   = block.settings.logo_image
+            assign card_title = block.settings.card_title
+            assign shop_label = block.settings.shop_label | default: 'Shop Now'
+          -%}
+          <li {{ block.shopify_attributes }}>
+            <a
+              href="{{ card_url }}"
+              class="cht-au__card"
+              aria-label="{{ card_title | escape }} — {{ shop_label }}"
+            >
+              {%- comment -%} Background character image {%- endcomment -%}
+              {%- if card_img != blank -%}
+                <img
+                  class="cht-au__card-img"
+                  src="{{ card_img | img_url: '600x' }}"
+                  alt="{{ card_img.alt | default: card_title | escape }}"
+                  loading="lazy"
+                  width="{{ card_img.width }}"
+                  height="{{ card_img.height }}"
+                >
+              {%- else -%}
+                {{ 'collection-1' | placeholder_svg_tag: 'cht-au__card-img' }}
+              {%- endif -%}
+
+              {%- comment -%} Gradient overlay {%- endcomment -%}
+              <div class="cht-au__card-overlay" aria-hidden="true"></div>
+
+              {%- comment -%} Bottom content: logo + shop now {%- endcomment -%}
+              <div class="cht-au__card-content">
+                {%- if logo_img != blank -%}
+                  <img
+                    class="cht-au__card-logo"
+                    src="{{ logo_img | img_url: '300x' }}"
+                    alt="{{ card_title | escape }}"
+                    loading="lazy"
+                    width="{{ logo_img.width }}"
+                    height="{{ logo_img.height }}"
+                    aria-hidden="true"
+                  >
+                {%- elsif card_title != blank -%}
+                  <span class="cht-au__card-title" aria-hidden="true">{{ card_title }}</span>
+                {%- endif -%}
+
+                <span class="cht-au__shop" aria-hidden="true">
+                  {{ shop_label }}
+                  <svg viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </div>
+            </a>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- comment -%} Empty state in editor {%- endcomment -%}
+      {%- if section.blocks.size == 0 -%}
+        {%- for i in (1..4) -%}
+          <li>
+            <a href="#" class="cht-au__card" aria-label="Universe {{ i }}">
+              {{ 'collection-' | append: i | placeholder_svg_tag: 'cht-au__card-img' }}
+              <div class="cht-au__card-overlay" aria-hidden="true"></div>
+              <div class="cht-au__card-content">
+                <span class="cht-au__card-title">Universe {{ i }}</span>
+                <span class="cht-au__shop" aria-hidden="true">
+                  Shop Now
+                  <svg viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+              </div>
+            </a>
+          </li>
+        {%- endfor -%}
+      {%- endif -%}
+    </ul>
+
+  </div>
+</section>
+
+<script>
+(function () {
+  // Mark cards as loaded once their image is ready (removes shimmer)
+  var cards = document.querySelectorAll('#ChtAnimeUniverses-{{ section.id }} .cht-au__card');
+  cards.forEach(function (card) {
+    var img = card.querySelector('.cht-au__card-img');
+    if (!img) { card.classList.add('img-loaded'); return; }
+    if (img.complete) {
+      card.classList.add('img-loaded');
+    } else {
+      img.addEventListener('load', function () { card.classList.add('img-loaded'); });
+      img.addEventListener('error', function () { card.classList.add('img-loaded'); });
+    }
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "CHT Anime Universes",
+  "tag": "section",
+  "blocks": [
+    {
+      "type": "universe_card",
+      "name": "Universe Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "card_title",
+          "label": "Universe name",
+          "info": "Shown as text fallback if no logo image",
+          "default": "Naruto"
+        },
+        {
+          "type": "image_picker",
+          "id": "card_image",
+          "label": "Background / character image"
+        },
+        {
+          "type": "image_picker",
+          "id": "logo_image",
+          "label": "Universe logo image",
+          "info": "PNG with transparent background recommended"
+        },
+        {
+          "type": "url",
+          "id": "card_url",
+          "label": "Card link URL"
+        },
+        {
+          "type": "text",
+          "id": "shop_label",
+          "label": "Shop Now label",
+          "default": "Shop Now"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section"
+    },
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Section heading",
+      "default": "Featured Anime Universes"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_explore",
+      "label": "Show Explore All link",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "explore_label",
+      "label": "Explore link label",
+      "default": "Explore All Universes"
+    },
+    {
+      "type": "url",
+      "id": "explore_url",
+      "label": "Explore link URL"
+    },
+    {
+      "type": "header",
+      "content": "Grid Layout"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns — Desktop",
+      "min": 2, "max": 6, "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "columns_tablet",
+      "label": "Columns — Tablet",
+      "min": 2, "max": 4, "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "label": "Columns — Mobile",
+      "min": 1, "max": 3, "step": 1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Gap between cards",
+      "min": 4, "max": 40, "step": 2, "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "select",
+      "id": "card_aspect",
+      "label": "Card aspect ratio",
+      "options": [
+        { "value": "3/4",  "label": "3:4 (Portrait)" },
+        { "value": "1/1",  "label": "1:1 (Square)" },
+        { "value": "4/3",  "label": "4:3 (Landscape)" },
+        { "value": "16/9", "label": "16:9 (Wide)" },
+        { "value": "2/3",  "label": "2:3 (Tall)" }
+      ],
+      "default": "3/4"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Card border radius",
+      "min": 0, "max": 24, "step": 2, "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Section padding top",
+      "min": 0, "max": 120, "step": 4, "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Section padding bottom",
+      "min": 0, "max": 120, "step": 4, "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Logo / Title Size"
+    },
+    {
+      "type": "range",
+      "id": "logo_height_desktop",
+      "label": "Logo height — Desktop",
+      "min": 20, "max": 90, "step": 2, "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "range",
+      "id": "logo_height_mobile",
+      "label": "Logo height — Mobile",
+      "min": 16, "max": 60, "step": 2, "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "header",
+      "content": "Font Sizes"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Section heading — Desktop",
+      "min": 14, "max": 40, "step": 1, "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Section heading — Mobile",
+      "min": 13, "max": 28, "step": 1, "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "shop_size_desktop",
+      "label": "Shop Now — Desktop",
+      "min": 10, "max": 20, "step": 1, "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "shop_size_mobile",
+      "label": "Shop Now — Mobile",
+      "min": 9, "max": 16, "step": 1, "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Section heading color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "explore_color",
+      "label": "Explore link color",
+      "default": "#E84C00"
+    },
+    {
+      "type": "color",
+      "id": "shop_now_color",
+      "label": "Shop Now color",
+      "default": "#E84C00"
+    },
+    {
+      "type": "header",
+      "content": "Card Overlay Gradient"
+    },
+    {
+      "type": "color",
+      "id": "overlay_start",
+      "label": "Overlay — bottom (strong)",
+      "default": "#00000099"
+    },
+    {
+      "type": "color",
+      "id": "overlay_end",
+      "label": "Overlay — top (transparent)",
+      "default": "#00000000"
+    }
+  ],
+  "presets": [
+    {
+      "name": "CHT Anime Universes",
+      "blocks": [
+        {
+          "type": "universe_card",
+          "settings": {
+            "card_title": "Naruto",
+            "shop_label": "Shop Now"
+          }
+        },
+        {
+          "type": "universe_card",
+          "settings": {
+            "card_title": "One Piece",
+            "shop_label": "Shop Now"
+          }
+        },
+        {
+          "type": "universe_card",
+          "settings": {
+            "card_title": "Demon Slayer",
+            "shop_label": "Shop Now"
+          }
+        },
+        {
+          "type": "universe_card",
+          "settings": {
+            "card_title": "Attack on Titan",
+            "shop_label": "Shop Now"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

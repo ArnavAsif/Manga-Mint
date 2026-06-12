@@ -1,0 +1,1350 @@
+{% comment %}
+  CHT MINI — Header Section
+  File: sections/cht-header.liquid
+{% endcomment %}
+
+{%style %}
+  /* ============================================================
+   CHT MINI — Header Styles
+   Asset: assets/cht-header.css
+   ============================================================ */
+
+/* ── Reset / Base ── */
+.cht-header *,
+.cht-header *::before,
+.cht-header *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body.cht-no-scroll { overflow: hidden; }
+
+/* ── Root vars (overridden per-section via inline style) ── */
+.cht-header {
+  --header-bg:     #ffffff;
+  --header-text:   #111111;
+  --header-accent: #E84C00;
+  --logo-size-desktop: 40px;
+  --logo-size-mobile:  30px;
+  --nav-font-size: 14px;
+  --header-shadow: 0 2px 12px rgba(0,0,0,.08);
+  --transition:    .25s cubic-bezier(.4,0,.2,1);
+
+  background: var(--header-bg);
+  color: var(--header-text);
+  position: relative;
+  z-index: 200;
+  width: 100%;
+  transition: box-shadow var(--transition);
+}
+
+.cht-header.is-sticky {
+  position: sticky;
+  top: 0;
+  box-shadow: var(--header-shadow);
+}
+
+/* ── Top bar ── */
+.cht-header__top {
+  border-bottom: 1px solid rgba(0,0,0,.07);
+}
+
+.cht-header__inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 52px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* ── Logo ── */
+.cht-header__logo {
+  text-decoration: none;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.cht-header__logo-img {
+  height: var(--logo-size-desktop);
+  width: auto;
+  display: block;
+}
+
+.cht-header__logo-text {
+  font-size: calc(var(--logo-size-desktop) * 0.55);
+  font-weight: 900;
+  letter-spacing: -.02em;
+  color: var(--header-text);
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.cht-header__logo-text strong {
+  color: var(--header-accent);
+}
+
+/* ── Search wrap ── */
+.cht-header__search-wrap {
+  flex: 1;
+  min-width: 0;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.cht-header__search-form {
+  display: flex;
+  align-items: stretch;
+  border: 1.5px solid rgba(0,0,0,.14);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  height: 42px;
+}
+
+.cht-header__search-form:focus-within {
+  border-color: var(--header-accent);
+  box-shadow: 0 0 0 3px rgba(232,76,0,.12);
+}
+
+/* Category dropdown */
+.cht-header__cat-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.cht-header__cat-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 14px;
+  height: 100%;
+  background: #f5f5f5;
+  border: none;
+  border-right: 1.5px solid rgba(0,0,0,.1);
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--header-text);
+  white-space: nowrap;
+  transition: background var(--transition);
+}
+
+.cht-header__cat-btn:hover { background: #ebebeb; }
+
+.cht-cat__arrow {
+  width: 10px;
+  height: 6px;
+  transition: transform var(--transition);
+}
+
+.cht-header__cat-btn[aria-expanded="true"] .cht-cat__arrow {
+  transform: rotate(180deg);
+}
+
+.cht-header__cat-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 180px;
+  background: #fff;
+  border: 1.5px solid rgba(0,0,0,.1);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.12);
+  list-style: none;
+  padding: 6px 0;
+  z-index: 500;
+  opacity: 0;
+  transform: translateY(-8px) scaleY(.96);
+  transform-origin: top;
+  pointer-events: none;
+  transition: opacity var(--transition), transform var(--transition);
+}
+
+.cht-header__cat-dropdown.is-open {
+  opacity: 1;
+  transform: translateY(0) scaleY(1);
+  pointer-events: auto;
+}
+
+.cht-cat__item {
+  padding: 9px 16px;
+  font-size: 13.5px;
+  cursor: pointer;
+  color: var(--header-text);
+  transition: background var(--transition), color var(--transition);
+}
+
+.cht-cat__item:hover { background: #f5f5f5; color: var(--header-accent); }
+.cht-cat__item--active { color: var(--header-accent); font-weight: 600; }
+
+/* Search input */
+.cht-header__search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 0 14px;
+  font-size: 14px;
+  color: var(--header-text);
+  background: transparent;
+  min-width: 0;
+}
+
+.cht-header__search-input::placeholder { color: #aaa; }
+
+/* Search button */
+.cht-header__search-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  background: var(--header-accent);
+  border: none;
+  cursor: pointer;
+  color: #fff;
+  flex-shrink: 0;
+  transition: background var(--transition);
+}
+
+.cht-header__search-btn:hover { background: color-mix(in srgb, var(--header-accent) 85%, #000); }
+.cht-header__search-btn svg { width: 18px; height: 18px; }
+
+/* ── Actions ── */
+.cht-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.cht-header__cart-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--header-text);
+  border-radius: 8px;
+  transition: background var(--transition), color var(--transition);
+}
+
+.cht-header__cart-btn:hover { background: rgba(0,0,0,.06); color: var(--header-accent); }
+.cht-header__cart-btn svg { width: 24px; height: 24px; }
+
+.cht-cart__count {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 4px;
+  background: var(--header-accent);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 99px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.cht-cart__count:empty,
+.cht-cart__count[data-count="0"] { display: none; }
+
+/* Hamburger */
+.cht-header__hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+}
+
+.cht-header__hamburger span {
+  display: block;
+  height: 2px;
+  background: var(--header-text);
+  border-radius: 2px;
+  transition: transform var(--transition), opacity var(--transition), width var(--transition);
+  transform-origin: center;
+}
+
+.cht-header__hamburger.is-active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.cht-header__hamburger.is-active span:nth-child(2) { opacity: 0; width: 0; }
+.cht-header__hamburger.is-active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ── Nav bar ── */
+.cht-header__nav {
+  border-top: 1px solid rgba(0,0,0,.06);
+}
+
+.cht-header__nav-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.cht-nav__list {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  height: 46px;
+  justify-content: center;
+}
+
+.cht-nav__item {
+  position: relative;
+}
+
+.cht-nav__link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 14px;
+  font-size: var(--nav-font-size);
+  font-weight: 600;
+  color: var(--header-text);
+  text-decoration: none;
+  border-radius: 6px;
+  letter-spacing: .01em;
+  text-transform: uppercase;
+  transition: color var(--transition), background var(--transition);
+  white-space: nowrap;
+}
+
+.cht-nav__link:hover,
+.cht-nav__link--active {
+  color: var(--header-accent);
+}
+
+.cht-nav__link--active {
+  border-bottom: 2px solid var(--header-accent);
+  border-radius: 0;
+}
+
+.cht-nav__caret {
+  width: 9px;
+  height: 5px;
+  transition: transform var(--transition);
+}
+
+.cht-nav__item--has-dropdown:hover .cht-nav__caret,
+.cht-nav__item--has-dropdown:focus-within .cht-nav__caret {
+  transform: rotate(180deg);
+}
+
+/* Desktop dropdown */
+.cht-nav__dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px) scaleY(.95);
+  transform-origin: top;
+  min-width: 180px;
+  background: #fff;
+  border: 1.5px solid rgba(0,0,0,.08);
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(0,0,0,.12);
+  list-style: none;
+  padding: 8px 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition), transform var(--transition);
+  z-index: 400;
+}
+
+.cht-nav__item--has-dropdown:hover .cht-nav__dropdown,
+.cht-nav__item--has-dropdown:focus-within .cht-nav__dropdown {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0) scaleY(1);
+  pointer-events: auto;
+}
+
+.cht-nav__dropdown-link {
+  display: block;
+  padding: 9px 18px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--header-text);
+  text-decoration: none;
+  transition: background var(--transition), color var(--transition);
+}
+
+.cht-nav__dropdown-link:hover,
+.cht-nav__dropdown-link--active {
+  background: #f8f8f8;
+  color: var(--header-accent);
+}
+
+/* ══════════════════════════════════════
+   CART DRAWER
+══════════════════════════════════════ */
+.cht-cart-overlay,
+.cht-mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  z-index: 899;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease;
+}
+
+.cht-cart-overlay.is-visible,
+.cht-mobile-overlay.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cht-cart-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 400px;
+  max-width: 100vw;
+  background: #fff;
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform .35s cubic-bezier(.4,0,.2,1);
+  box-shadow: -8px 0 32px rgba(0,0,0,.15);
+}
+
+.cht-cart-drawer.is-open { transform: translateX(0); }
+
+.cht-cart-drawer__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 20px;
+  border-bottom: 1px solid rgba(0,0,0,.08);
+  flex-shrink: 0;
+}
+
+.cht-cart-drawer__title {
+  font-size: 18px;
+  font-weight: 800;
+  flex: 1;
+}
+
+.cht-cart-drawer__count-label {
+  font-size: 13px;
+  color: #888;
+}
+
+.cht-cart-drawer__close {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.cht-cart-drawer__close:hover { background: #e0e0e0; }
+.cht-cart-drawer__close svg { width: 18px; height: 18px; }
+
+.cht-cart-drawer__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 20px;
+  overscroll-behavior: contain;
+}
+
+/* Empty state */
+.cht-cart-drawer__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.cht-cart-drawer__empty-icon {
+  width: 64px;
+  height: 64px;
+  color: #ccc;
+}
+
+.cht-cart-drawer__empty p { font-size: 15px; color: #888; }
+
+.cht-cart-drawer__shop-btn {
+  display: inline-block;
+  padding: 10px 24px;
+  background: var(--header-accent);
+  color: #fff;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: opacity var(--transition);
+}
+
+.cht-cart-drawer__shop-btn:hover { opacity: .88; }
+
+/* Cart items */
+.cht-cart-drawer__items { list-style: none; }
+
+.cht-cart-drawer__item {
+  display: flex;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(0,0,0,.07);
+  position: relative;
+  animation: cht-fade-in .25s ease;
+}
+
+@keyframes cht-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.cht-cart-drawer__item-img-wrap {
+  flex-shrink: 0;
+  width: 72px;
+  height: 72px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,.07);
+}
+
+.cht-cart-drawer__item-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cht-cart-drawer__item-info { flex: 1; min-width: 0; }
+
+.cht-cart-drawer__item-title {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--header-text);
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+  transition: color var(--transition);
+}
+
+.cht-cart-drawer__item-title:hover { color: var(--header-accent); }
+
+.cht-cart-drawer__item-variant {
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 8px;
+}
+
+.cht-cart-drawer__item-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.cht-qty {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border: 1.5px solid rgba(0,0,0,.12);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.cht-qty__btn {
+  width: 28px;
+  height: 28px;
+  background: #f5f5f5;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--header-text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition);
+}
+
+.cht-qty__btn:hover { background: #e8e8e8; color: var(--header-accent); }
+
+.cht-qty__val {
+  min-width: 30px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.cht-cart-drawer__item-price {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--header-text);
+}
+
+.cht-cart-drawer__item-remove {
+  position: absolute;
+  top: 12px;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #bbb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: color var(--transition), background var(--transition);
+}
+
+.cht-cart-drawer__item-remove:hover { color: #e33; background: #fff0f0; }
+.cht-cart-drawer__item-remove svg { width: 14px; height: 14px; }
+
+/* Cart footer */
+.cht-cart-drawer__footer {
+  flex-shrink: 0;
+  padding: 16px 20px 20px;
+  border-top: 1px solid rgba(0,0,0,.08);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cht-cart-drawer__subtotal {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.cht-cart-drawer__shipping-note {
+  font-size: 12px;
+  color: #999;
+  text-align: center;
+}
+
+.cht-cart-drawer__view-btn,
+.cht-cart-drawer__checkout-btn {
+  display: block;
+  text-align: center;
+  padding: 13px;
+  border-radius: 9px;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: opacity var(--transition), transform var(--transition);
+}
+
+.cht-cart-drawer__view-btn:hover,
+.cht-cart-drawer__checkout-btn:hover { opacity: .88; transform: translateY(-1px); }
+
+.cht-cart-drawer__view-btn {
+  background: #f0f0f0;
+  color: var(--header-text);
+}
+
+.cht-cart-drawer__checkout-btn {
+  background: var(--header-accent);
+  color: #fff;
+}
+
+/* ══════════════════════════════════════
+   MOBILE NAV DRAWER
+══════════════════════════════════════ */
+.cht-mobile-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 300px;
+  max-width: 85vw;
+  background: #fff;
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-100%);
+  transition: transform .35s cubic-bezier(.4,0,.2,1);
+  overflow-y: auto;
+  box-shadow: 8px 0 32px rgba(0,0,0,.12);
+}
+
+.cht-mobile-nav.is-open { transform: translateX(0); }
+
+.cht-mobile-nav__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
+  border-bottom: 1px solid rgba(0,0,0,.08);
+}
+
+.cht-mobile-nav__title {
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.cht-mobile-nav__close {
+  width: 34px;
+  height: 34px;
+  background: #f0f0f0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--transition);
+}
+
+.cht-mobile-nav__close svg { width: 18px; height: 18px; }
+
+.cht-mobile-nav__list { list-style: none; padding: 8px 0; }
+
+.cht-mobile-nav__item { border-bottom: 1px solid rgba(0,0,0,.05); }
+
+.cht-mobile-nav__link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 14px 18px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--header-text);
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: color var(--transition), background var(--transition);
+  text-transform: uppercase;
+  letter-spacing: .02em;
+}
+
+.cht-mobile-nav__link:hover,
+.cht-mobile-nav__link.active { color: var(--header-accent); background: #fef9f6; }
+
+.cht-mobile-nav__arrow {
+  width: 10px;
+  height: 6px;
+  transition: transform var(--transition);
+}
+
+.cht-mobile-nav__toggle.is-open .cht-mobile-nav__arrow {
+  transform: rotate(180deg);
+}
+
+.cht-mobile-nav__sub {
+  list-style: none;
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height .35s cubic-bezier(.4,0,.2,1);
+  background: #fafafa;
+}
+
+.cht-mobile-nav__sub.is-open { max-height: 800px; }
+
+.cht-mobile-nav__sub-link {
+  display: block;
+  padding: 11px 18px 11px 30px;
+  font-size: 14px;
+  color: #555;
+  text-decoration: none;
+  transition: color var(--transition);
+}
+
+.cht-mobile-nav__sub-link:hover { color: var(--header-accent); }
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+@media (max-width: 900px) {
+  .cht-header__search-wrap { max-width: none; }
+  .cht-header__nav { display: none; }
+  .cht-header__hamburger { display: flex; }
+}
+
+@media (max-width: 640px) {
+  .cht-header__inner { padding: 0 14px; gap: 10px; height: 56px; }
+
+  .cht-header__logo-img { height: var(--logo-size-mobile); }
+  .cht-header__logo-text { font-size: calc(var(--logo-size-mobile) * 0.55); }
+
+  .cht-header__cat-btn { display: none; }
+  .cht-header__search-form { border-radius: 6px; }
+  .cht-header__search-input { font-size: 13px; }
+
+  .cht-cart-drawer { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cht-cart-drawer,
+  .cht-mobile-nav,
+  .cht-cart-overlay,
+  .cht-mobile-overlay,
+  .cht-header__cat-dropdown,
+  .cht-nav__dropdown {
+    transition: none !important;
+  }
+}
+
+{% endstyle %}
+
+<header class="cht-header" id="ChtHeader" style="
+  --header-bg: {{ section.settings.header_bg_color }};
+  --header-text: {{ section.settings.header_text_color }};
+  --header-accent: {{ section.settings.accent_color }};
+  --logo-size-desktop: {{ section.settings.logo_size_desktop }}px;
+  --logo-size-mobile: {{ section.settings.logo_size_mobile }}px;
+  --nav-font-size: {{ section.settings.nav_font_size }}px;
+">
+
+  {%- comment -%} TOP BAR {%- endcomment -%}
+  <div class="cht-header__top">
+    <div class="cht-header__inner">
+
+      {%- comment -%} LOGO {%- endcomment -%}
+      <a href="{{ routes.root_url }}" class="cht-header__logo">
+        {%- if section.settings.logo != blank -%}
+          <img
+            src="{{ section.settings.logo | img_url: '300x' }}"
+            alt="{{ shop.name }}"
+            class="cht-header__logo-img"
+            loading="eager"
+          >
+        {%- else -%}
+          <span class="cht-header__logo-text">
+            {{ section.settings.logo_text | default: shop.name }}
+          </span>
+        {%- endif -%}
+      </a>
+
+      {%- comment -%} SEARCH + CATEGORY {%- endcomment -%}
+      <div class="cht-header__search-wrap">
+        <form action="{{ routes.search_url }}" method="get" class="cht-header__search-form" role="search">
+          <input type="hidden" name="type" value="product">
+
+          {%- comment -%} CATEGORY DROPDOWN {%- endcomment -%}
+          <div class="cht-header__cat-wrap" id="ChtCatWrap">
+            <button type="button" class="cht-header__cat-btn" id="ChtCatBtn" aria-haspopup="true" aria-expanded="false">
+              <span class="cht-cat__label" id="ChtCatLabel">All Categories</span>
+              <svg class="cht-cat__arrow" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+                <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </button>
+            <ul class="cht-header__cat-dropdown" id="ChtCatDropdown" role="listbox">
+              <li role="option" class="cht-cat__item cht-cat__item--active" data-value="">All Categories</li>
+              {%- for link in linklists[section.settings.category_menu].links -%}
+                <li role="option" class="cht-cat__item" data-value="{{ link.title | handleize }}">{{ link.title }}</li>
+              {%- endfor -%}
+            </ul>
+          </div>
+
+          <input
+            type="text"
+            name="q"
+            id="ChtSearchInput"
+            class="cht-header__search-input"
+            placeholder="{{ section.settings.search_placeholder | default: 'Search manga, anime, figures...' }}"
+            autocomplete="off"
+            aria-label="Search"
+          >
+          <input type="hidden" name="options[prefix]" value="last">
+
+          <button type="submit" class="cht-header__search-btn" aria-label="Search">
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="2"/>
+              <path d="M13.5 13.5L17 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </form>
+      </div>
+
+      {%- comment -%} CART ONLY {%- endcomment -%}
+      <div class="cht-header__actions">
+        <button type="button" class="cht-header__cart-btn" id="ChtCartBtn" aria-label="Cart">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            <line x1="3" y1="6" x2="21" y2="6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M16 10a4 4 0 01-8 0" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="cht-cart__count" id="ChtCartCount" aria-live="polite">{{ cart.item_count }}</span>
+        </button>
+
+        {%- comment -%} HAMBURGER (mobile) {%- endcomment -%}
+        <button type="button" class="cht-header__hamburger" id="ChtHamburger" aria-label="Menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  {%- comment -%} NAV BAR {%- endcomment -%}
+  <nav class="cht-header__nav" id="ChtNav" aria-label="Main navigation">
+    <div class="cht-header__nav-inner">
+      <ul class="cht-nav__list" id="ChtNavList">
+        {%- for link in linklists[section.settings.main_menu].links -%}
+          {%- if link.links != blank -%}
+            <li class="cht-nav__item cht-nav__item--has-dropdown">
+              <a href="{{ link.url }}" class="cht-nav__link{% if link.active %} cht-nav__link--active{% endif %}">
+                {{ link.title }}
+                <svg class="cht-nav__caret" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+                  <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </a>
+              <ul class="cht-nav__dropdown">
+                {%- for child in link.links -%}
+                  <li class="cht-nav__dropdown-item">
+                    <a href="{{ child.url }}" class="cht-nav__dropdown-link{% if child.active %} cht-nav__dropdown-link--active{% endif %}">
+                      {{ child.title }}
+                    </a>
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </li>
+          {%- else -%}
+            <li class="cht-nav__item">
+              <a href="{{ link.url }}" class="cht-nav__link{% if link.active %} cht-nav__link--active{% endif %}">
+                {{ link.title }}
+              </a>
+            </li>
+          {%- endif -%}
+        {%- endfor -%}
+      </ul>
+    </div>
+  </nav>
+
+</header>
+
+{%- comment -%} CART DRAWER OVERLAY {%- endcomment -%}
+<div class="cht-cart-overlay" id="ChtCartOverlay" aria-hidden="true"></div>
+
+<aside class="cht-cart-drawer" id="ChtCartDrawer" aria-label="Shopping cart" aria-hidden="true">
+  <div class="cht-cart-drawer__header">
+    <h2 class="cht-cart-drawer__title">Your Cart</h2>
+    <span class="cht-cart-drawer__count-label" id="ChtDrawerCount">{{ cart.item_count }} item{% if cart.item_count != 1 %}s{% endif %}</span>
+    <button type="button" class="cht-cart-drawer__close" id="ChtCartClose" aria-label="Close cart">
+      <svg viewBox="0 0 24 24" fill="none">
+        <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="cht-cart-drawer__body" id="ChtCartBody">
+    {%- if cart.item_count == 0 -%}
+      <div class="cht-cart-drawer__empty">
+        <svg viewBox="0 0 64 64" fill="none" class="cht-cart-drawer__empty-icon">
+          <circle cx="32" cy="32" r="28" stroke="currentColor" stroke-width="2" opacity=".2"/>
+          <path d="M20 24h24l-3 14H23L20 24z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M16 20h4l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <p>Your cart is empty</p>
+        <a href="{{ routes.all_products_collection_url }}" class="cht-cart-drawer__shop-btn">Start Shopping</a>
+      </div>
+    {%- else -%}
+      <ul class="cht-cart-drawer__items">
+        {%- for item in cart.items -%}
+          <li class="cht-cart-drawer__item" data-key="{{ item.key }}">
+            <a href="{{ item.url }}" class="cht-cart-drawer__item-img-wrap">
+              <img src="{{ item.image | img_url: '120x' }}" alt="{{ item.title }}" loading="lazy" class="cht-cart-drawer__item-img">
+            </a>
+            <div class="cht-cart-drawer__item-info">
+              <a href="{{ item.url }}" class="cht-cart-drawer__item-title">{{ item.product.title }}</a>
+              {%- unless item.product.has_only_default_variant -%}
+                <p class="cht-cart-drawer__item-variant">{{ item.variant.title }}</p>
+              {%- endunless -%}
+              <div class="cht-cart-drawer__item-bottom">
+                <div class="cht-qty">
+                  <button class="cht-qty__btn cht-qty__btn--minus" data-key="{{ item.key }}" data-qty="{{ item.quantity | minus: 1 }}" aria-label="Decrease">−</button>
+                  <span class="cht-qty__val">{{ item.quantity }}</span>
+                  <button class="cht-qty__btn cht-qty__btn--plus" data-key="{{ item.key }}" data-qty="{{ item.quantity | plus: 1 }}" aria-label="Increase">+</button>
+                </div>
+                <span class="cht-cart-drawer__item-price">{{ item.line_price | money }}</span>
+              </div>
+            </div>
+            <button class="cht-cart-drawer__item-remove" data-key="{{ item.key }}" aria-label="Remove {{ item.title }}">
+              <svg viewBox="0 0 16 16" fill="none"><path d="M12 4L4 12M4 4l8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </button>
+          </li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+
+  <div class="cht-cart-drawer__footer" id="ChtCartFooter">
+    <div class="cht-cart-drawer__subtotal">
+      <span>Subtotal</span>
+      <span id="ChtCartSubtotal">{{ cart.total_price | money }}</span>
+    </div>
+    <p class="cht-cart-drawer__shipping-note">Shipping &amp; taxes calculated at checkout</p>
+    <a href="{{ routes.cart_url }}" class="cht-cart-drawer__view-btn">View Cart</a>
+    <a href="{{ routes.cart_url }}/checkout" class="cht-cart-drawer__checkout-btn">Checkout →</a>
+  </div>
+</aside>
+
+{%- comment -%} MOBILE NAV DRAWER {%- endcomment -%}
+<div class="cht-mobile-overlay" id="ChtMobileOverlay" aria-hidden="true"></div>
+
+<div class="cht-mobile-nav" id="ChtMobileNav" aria-hidden="true">
+  <div class="cht-mobile-nav__header">
+    <span class="cht-mobile-nav__title">Menu</span>
+    <button type="button" class="cht-mobile-nav__close" id="ChtMobileClose" aria-label="Close menu">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <ul class="cht-mobile-nav__list">
+    {%- for link in linklists[section.settings.main_menu].links -%}
+      {%- if link.links != blank -%}
+        <li class="cht-mobile-nav__item cht-mobile-nav__item--has-sub">
+          <button type="button" class="cht-mobile-nav__link cht-mobile-nav__toggle" aria-expanded="false">
+            {{ link.title }}
+            <svg class="cht-mobile-nav__arrow" viewBox="0 0 10 6" fill="none">
+              <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+          <ul class="cht-mobile-nav__sub">
+            {%- for child in link.links -%}
+              <li><a href="{{ child.url }}" class="cht-mobile-nav__sub-link">{{ child.title }}</a></li>
+            {%- endfor -%}
+          </ul>
+        </li>
+      {%- else -%}
+        <li class="cht-mobile-nav__item">
+          <a href="{{ link.url }}" class="cht-mobile-nav__link{% if link.active %} active{% endif %}">{{ link.title }}</a>
+        </li>
+      {%- endif -%}
+    {%- endfor -%}
+  </ul>
+</div>
+
+<script>
+(function() {
+  // ── CATEGORY DROPDOWN ──
+  const catBtn   = document.getElementById('ChtCatBtn');
+  const catDrop  = document.getElementById('ChtCatDropdown');
+  const catLabel = document.getElementById('ChtCatLabel');
+
+  catBtn && catBtn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    const open = catBtn.getAttribute('aria-expanded') === 'true';
+    catBtn.setAttribute('aria-expanded', String(!open));
+    catDrop.classList.toggle('is-open', !open);
+  });
+
+  catDrop && catDrop.querySelectorAll('.cht-cat__item').forEach(function(item) {
+    item.addEventListener('click', function() {
+      catLabel.textContent = item.textContent;
+      catDrop.querySelectorAll('.cht-cat__item').forEach(function(i){ i.classList.remove('cht-cat__item--active'); });
+      item.classList.add('cht-cat__item--active');
+      catBtn.setAttribute('aria-expanded', 'false');
+      catDrop.classList.remove('is-open');
+    });
+  });
+
+  document.addEventListener('click', function(e) {
+    if (catDrop && !catBtn.contains(e.target)) {
+      catBtn.setAttribute('aria-expanded', 'false');
+      catDrop.classList.remove('is-open');
+    }
+  });
+
+  // ── CART DRAWER ──
+  const cartBtn     = document.getElementById('ChtCartBtn');
+  const cartDrawer  = document.getElementById('ChtCartDrawer');
+  const cartOverlay = document.getElementById('ChtCartOverlay');
+  const cartClose   = document.getElementById('ChtCartClose');
+
+  function openCart() {
+    cartDrawer.classList.add('is-open');
+    cartOverlay.classList.add('is-visible');
+    cartDrawer.setAttribute('aria-hidden', 'false');
+    cartOverlay.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('cht-no-scroll');
+  }
+
+  function closeCart() {
+    cartDrawer.classList.remove('is-open');
+    cartOverlay.classList.remove('is-visible');
+    cartDrawer.setAttribute('aria-hidden', 'true');
+    cartOverlay.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('cht-no-scroll');
+  }
+
+  cartBtn && cartBtn.addEventListener('click', openCart);
+  cartClose && cartClose.addEventListener('click', closeCart);
+  cartOverlay && cartOverlay.addEventListener('click', closeCart);
+
+  // Qty + Remove
+  document.addEventListener('click', function(e) {
+    const qtyBtn    = e.target.closest('.cht-qty__btn');
+    const removeBtn = e.target.closest('.cht-cart-drawer__item-remove');
+
+    if (qtyBtn) {
+      const key = qtyBtn.dataset.key;
+      const qty = parseInt(qtyBtn.dataset.qty, 10);
+      updateCartItem(key, qty);
+    }
+    if (removeBtn) {
+      updateCartItem(removeBtn.dataset.key, 0);
+    }
+  });
+
+  function updateCartItem(key, qty) {
+    fetch('/cart/change.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: key, quantity: qty })
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(cart){ refreshCartDrawer(cart); })
+    .catch(function(err){ console.warn('Cart update error:', err); });
+  }
+
+  function refreshCartDrawer(cart) {
+    // Update count badge
+    const countEl = document.getElementById('ChtCartCount');
+    if (countEl) countEl.textContent = cart.item_count;
+
+    const drawerCount = document.getElementById('ChtDrawerCount');
+    if (drawerCount) drawerCount.textContent = cart.item_count + ' item' + (cart.item_count !== 1 ? 's' : '');
+
+    const subtotalEl = document.getElementById('ChtCartSubtotal');
+    if (subtotalEl) subtotalEl.textContent = formatMoney(cart.total_price);
+
+    // Re-render items
+    const body = document.getElementById('ChtCartBody');
+    if (!body) return;
+
+    if (cart.item_count === 0) {
+      body.innerHTML = '<div class="cht-cart-drawer__empty"><p>Your cart is empty</p><a href="/collections/all" class="cht-cart-drawer__shop-btn">Start Shopping</a></div>';
+    } else {
+      let html = '<ul class="cht-cart-drawer__items">';
+      cart.items.forEach(function(item) {
+        html += '<li class="cht-cart-drawer__item" data-key="' + item.key + '">';
+        html += '<a href="' + item.url + '" class="cht-cart-drawer__item-img-wrap"><img src="' + item.image + '" alt="' + item.title + '" class="cht-cart-drawer__item-img" loading="lazy"></a>';
+        html += '<div class="cht-cart-drawer__item-info">';
+        html += '<a href="' + item.url + '" class="cht-cart-drawer__item-title">' + item.product_title + '</a>';
+        if (item.variant_title && item.variant_title !== 'Default Title') {
+          html += '<p class="cht-cart-drawer__item-variant">' + item.variant_title + '</p>';
+        }
+        html += '<div class="cht-cart-drawer__item-bottom">';
+        html += '<div class="cht-qty"><button class="cht-qty__btn cht-qty__btn--minus" data-key="' + item.key + '" data-qty="' + (item.quantity - 1) + '" aria-label="Decrease">−</button>';
+        html += '<span class="cht-qty__val">' + item.quantity + '</span>';
+        html += '<button class="cht-qty__btn cht-qty__btn--plus" data-key="' + item.key + '" data-qty="' + (item.quantity + 1) + '" aria-label="Increase">+</button></div>';
+        html += '<span class="cht-cart-drawer__item-price">' + formatMoney(item.line_price) + '</span>';
+        html += '</div></div>';
+        html += '<button class="cht-cart-drawer__item-remove" data-key="' + item.key + '" aria-label="Remove"><svg viewBox="0 0 16 16" fill="none"><path d="M12 4L4 12M4 4l8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>';
+        html += '</li>';
+      });
+      html += '</ul>';
+      body.innerHTML = html;
+    }
+  }
+
+  function formatMoney(cents) {
+    return '$' + (cents / 100).toFixed(2);
+  }
+
+  // ── MOBILE NAV ──
+  const hamburger    = document.getElementById('ChtHamburger');
+  const mobileNav    = document.getElementById('ChtMobileNav');
+  const mobileOverlay= document.getElementById('ChtMobileOverlay');
+  const mobileClose  = document.getElementById('ChtMobileClose');
+
+  function openMobile() {
+    mobileNav.classList.add('is-open');
+    mobileOverlay.classList.add('is-visible');
+    mobileNav.setAttribute('aria-hidden', 'false');
+    hamburger.setAttribute('aria-expanded', 'true');
+    hamburger.classList.add('is-active');
+    document.body.classList.add('cht-no-scroll');
+  }
+
+  function closeMobile() {
+    mobileNav.classList.remove('is-open');
+    mobileOverlay.classList.remove('is-visible');
+    mobileNav.setAttribute('aria-hidden', 'true');
+    hamburger.setAttribute('aria-expanded', 'false');
+    hamburger.classList.remove('is-active');
+    document.body.classList.remove('cht-no-scroll');
+  }
+
+  hamburger && hamburger.addEventListener('click', openMobile);
+  mobileClose && mobileClose.addEventListener('click', closeMobile);
+  mobileOverlay && mobileOverlay.addEventListener('click', closeMobile);
+
+  // Mobile sub-menu toggles
+  document.querySelectorAll('.cht-mobile-nav__toggle').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      const sub = btn.nextElementSibling;
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!isOpen));
+      btn.classList.toggle('is-open', !isOpen);
+      if (sub) sub.classList.toggle('is-open', !isOpen);
+    });
+  });
+
+   // ── Expose globally for other sections ──
+  window.ChtHeader = {
+    openCart: openCart,
+    closeCart: closeCart,
+    refreshCart: function() {
+      fetch('/cart.js', {
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+      })
+      .then(function(r){ return r.json(); })
+      .then(function(cart){ refreshCartDrawer(cart); })
+      .catch(function(err){ console.warn('Cart refresh error:', err); });
+    }
+  };
+
+  // ── STICKY HEADER ──
+  const header = document.getElementById('ChtHeader');
+  let lastScroll = 0;
+  window.addEventListener('scroll', function() {
+    const current = window.scrollY;
+    if (current > 80) {
+      header.classList.add('is-sticky');
+    } else {
+      header.classList.remove('is-sticky');
+    }
+    lastScroll = current;
+  }, { passive: true });
+
+})();
+
+</script>
+
+{% schema %}
+{
+  "name": "CHT Header",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Logo"
+    },
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image"
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo text (if no image)",
+      "default": "CHT MINI"
+    },
+    {
+      "type": "range",
+      "id": "logo_size_desktop",
+      "label": "Logo height — Desktop",
+      "min": 24,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "logo_size_mobile",
+      "label": "Logo height — Mobile",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 30
+    },
+    {
+      "type": "header",
+      "content": "Navigation"
+    },
+    {
+      "type": "link_list",
+      "id": "main_menu",
+      "label": "Main menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "link_list",
+      "id": "category_menu",
+      "label": "Category dropdown menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "range",
+      "id": "nav_font_size",
+      "label": "Nav font size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "header",
+      "content": "Search"
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Search placeholder text",
+      "default": "Search manga, anime, figures..."
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "header_bg_color",
+      "label": "Header background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "header_text_color",
+      "label": "Header text / icon color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color (active links, buttons)",
+      "default": "#E84C00"
+    }
+  ],
+  "presets": [
+    {
+      "name": "CHT Header"
+    }
+  ]
+}
+{% endschema %}

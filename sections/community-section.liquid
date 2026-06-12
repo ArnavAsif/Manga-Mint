@@ -1,0 +1,906 @@
+{% comment %}
+  CHT MINI — Community Gallery Section
+  File: sections/cht-community-gallery.liquid
+{% endcomment %}
+
+{% style %}
+/* ============================================================
+   CHT Community Gallery — Styles
+   ============================================================ */
+
+.cht-gal *,
+.cht-gal *::before,
+.cht-gal *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.cht-gal {
+  --gal-bg:            {{ section.settings.section_bg }};
+  --gal-heading-color: {{ section.settings.heading_color }};
+  --gal-viewall-color: {{ section.settings.viewall_color }};
+  --gal-radius:        {{ section.settings.card_radius }}px;
+  --gal-gap:           {{ section.settings.card_gap }}px;
+  --gal-overlay:       {{ section.settings.overlay_color }};
+  --gal-heading-desk:  {{ section.settings.heading_size_desktop }}px;
+  --gal-heading-mob:   {{ section.settings.heading_size_mobile }}px;
+  --gal-transition:    .28s cubic-bezier(.4,0,.2,1);
+
+  background: var(--gal-bg);
+  padding: {{ section.settings.pad_top }}px 0 {{ section.settings.pad_bottom }}px;
+  width: 100%;
+}
+
+/* ── Inner ── */
+.cht-gal__inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 52px;
+}
+
+/* ── Header ── */
+.cht-gal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.cht-gal__heading {
+  font-size: var(--gal-heading-desk);
+  font-weight: 900;
+  color: var(--gal-heading-color);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  line-height: 1.1;
+}
+
+.cht-gal__viewall {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gal-viewall-color);
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: gap var(--gal-transition), opacity var(--gal-transition);
+}
+
+.cht-gal__viewall:hover { opacity: .75; gap: 7px; }
+
+.cht-gal__viewall svg {
+  width: 14px;
+  height: 14px;
+  transition: transform var(--gal-transition);
+}
+
+.cht-gal__viewall:hover svg { transform: translateX(3px); }
+
+/* ── Scroll container ── */
+.cht-gal__scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  cursor: grab;
+  user-select: none;
+}
+
+.cht-gal__scroll::-webkit-scrollbar { display: none; }
+.cht-gal__scroll.is-dragging { cursor: grabbing; }
+
+/* ── Grid ── */
+.cht-gal__grid {
+  display: grid;
+  grid-template-columns: repeat({{ section.blocks.size }}, 1fr);
+  gap: var(--gal-gap);
+  list-style: none;
+  min-width: 0;
+}
+
+/* When fewer than minimum columns — force equal sizing */
+@media (min-width: 769px) {
+  .cht-gal__grid {
+    grid-template-columns: repeat({{ section.settings.columns_desktop }}, 1fr);
+  }
+}
+
+/* ── Card ── */
+.cht-gal__card {
+  position: relative;
+  border-radius: var(--gal-radius);
+  overflow: hidden;
+  display: block;
+  cursor: pointer;
+  flex-shrink: 0;
+  aspect-ratio: {{ section.settings.card_aspect }};
+  background: #e0e0e0;
+  text-decoration: none;
+}
+
+/* Shimmer while loading */
+.cht-gal__card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #e8e8e8 25%, #f5f5f5 50%, #e8e8e8 75%);
+  background-size: 200% 100%;
+  animation: cht-gal-shimmer 1.4s infinite;
+  z-index: 0;
+  border-radius: var(--gal-radius);
+}
+
+.cht-gal__card.img-loaded::before { display: none; }
+
+@keyframes cht-gal-shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ── Image ── */
+.cht-gal__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  position: relative;
+  z-index: 1;
+  transition: transform .5s cubic-bezier(.4,0,.2,1);
+  border-radius: var(--gal-radius);
+}
+
+.cht-gal__card:hover .cht-gal__img {
+  transform: scale(1.06);
+}
+
+/* ── Hover overlay ── */
+.cht-gal__overlay {
+  position: absolute;
+  inset: 0;
+  background: var(--gal-overlay);
+  opacity: 0;
+  transition: opacity var(--gal-transition);
+  z-index: 2;
+  border-radius: var(--gal-radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cht-gal__card:hover .cht-gal__overlay {
+  opacity: 1;
+}
+
+/* ── Overlay icon ── */
+.cht-gal__overlay-icon {
+  width: 40px;
+  height: 40px;
+  background: rgba(255,255,255,.92);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(.7);
+  transition: transform var(--gal-transition);
+}
+
+.cht-gal__card:hover .cht-gal__overlay-icon {
+  transform: scale(1);
+}
+
+.cht-gal__overlay-icon svg {
+  width: 18px;
+  height: 18px;
+  color: #111;
+}
+
+/* ── Caption (optional) ── */
+.cht-gal__caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px 12px 10px;
+  background: linear-gradient(to top, rgba(0,0,0,.65), transparent);
+  z-index: 3;
+  opacity: 0;
+  transition: opacity var(--gal-transition);
+  border-radius: 0 0 var(--gal-radius) var(--gal-radius);
+}
+
+.cht-gal__card:hover .cht-gal__caption { opacity: 1; }
+
+.cht-gal__caption-text {
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Lightbox ── */
+.cht-gal__lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.92);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease;
+  padding: 20px;
+}
+
+.cht-gal__lightbox.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cht-gal__lightbox-inner {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cht-gal__lightbox-img {
+  max-width: 90vw;
+  max-height: 85vh;
+  border-radius: 12px;
+  object-fit: contain;
+  display: block;
+  box-shadow: 0 24px 80px rgba(0,0,0,.6);
+  transform: scale(.95);
+  transition: transform .3s cubic-bezier(.4,0,.2,1);
+}
+
+.cht-gal__lightbox.is-open .cht-gal__lightbox-img {
+  transform: scale(1);
+}
+
+.cht-gal__lightbox-close {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  background: rgba(255,255,255,.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  transition: background var(--gal-transition);
+  z-index: 10000;
+}
+
+.cht-gal__lightbox-close:hover { background: rgba(255,255,255,.28); }
+.cht-gal__lightbox-close svg { width: 20px; height: 20px; }
+
+/* Prev / Next */
+.cht-gal__lightbox-prev,
+.cht-gal__lightbox-next {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  background: rgba(255,255,255,.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #fff;
+  transition: background var(--gal-transition);
+  z-index: 10000;
+}
+
+.cht-gal__lightbox-prev { left: 16px; }
+.cht-gal__lightbox-next { right: 16px; }
+
+.cht-gal__lightbox-prev:hover,
+.cht-gal__lightbox-next:hover { background: rgba(255,255,255,.28); }
+
+.cht-gal__lightbox-prev svg,
+.cht-gal__lightbox-next svg { width: 22px; height: 22px; }
+
+.cht-gal__lightbox-caption {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255,255,255,.8);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  z-index: 10000;
+}
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+@media (max-width: 1100px) {
+  .cht-gal__grid {
+    grid-template-columns: repeat({{ section.settings.columns_tablet }}, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .cht-gal__inner { padding: 0 16px; }
+
+  .cht-gal__heading { font-size: var(--gal-heading-mob); }
+
+  /* Horizontal scroll on mobile */
+  .cht-gal__scroll {
+    margin: 0 -16px;
+    padding: 0 16px 8px;
+  }
+
+  .cht-gal__grid {
+    grid-template-columns: repeat({{ section.settings.columns_mobile }}, minmax(160px, 1fr));
+    width: max-content;
+    min-width: 100%;
+    gap: 10px;
+  }
+
+  /* Always show overlay icon on touch */
+  .cht-gal__overlay { opacity: 0; }
+  .cht-gal__overlay-icon { transform: scale(1); }
+
+  /* Nav arrows hidden on small screens */
+  .cht-gal__lightbox-prev,
+  .cht-gal__lightbox-next { display: none; }
+}
+
+@media (max-width: 480px) {
+  .cht-gal__inner { padding: 0 12px; }
+
+  .cht-gal__scroll {
+    margin: 0 -12px;
+    padding: 0 12px 8px;
+  }
+
+  .cht-gal__grid {
+    grid-template-columns: repeat({{ section.settings.columns_mobile }}, minmax(140px, 1fr));
+    gap: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cht-gal__img,
+  .cht-gal__overlay,
+  .cht-gal__lightbox,
+  .cht-gal__lightbox-img { transition: none !important; }
+  .cht-gal__card::before { animation: none !important; }
+}
+{% endstyle %}
+
+{%- liquid
+  assign show_lightbox  = section.settings.enable_lightbox
+  assign show_captions  = section.settings.show_captions
+  assign viewall_label  = section.settings.viewall_label | default: 'View All'
+-%}
+
+<section class="cht-gal" id="ChtGallery-{{ section.id }}" data-section-id="{{ section.id }}">
+  <div class="cht-gal__inner">
+
+    {%- comment -%} Header {%- endcomment -%}
+    <div class="cht-gal__header">
+      <h2 class="cht-gal__heading">{{ section.settings.section_title }}</h2>
+      {%- if section.settings.show_viewall and section.settings.viewall_url != blank -%}
+        <a href="{{ section.settings.viewall_url }}" class="cht-gal__viewall">
+          {{ viewall_label }}
+          <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Gallery Grid {%- endcomment -%}
+    {%- if section.blocks.size > 0 -%}
+      <div class="cht-gal__scroll" id="ChtGalScroll-{{ section.id }}">
+        <ul class="cht-gal__grid" role="list" id="ChtGalGrid-{{ section.id }}">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'image' -%}
+              {%- liquid
+                assign img      = block.settings.image
+                assign caption  = block.settings.caption
+                assign link_url = block.settings.link_url
+                assign index    = forloop.index0
+              -%}
+              <li
+                class="cht-gal__card"
+                data-index="{{ index }}"
+                {% if show_lightbox %}
+                  data-lightbox="true"
+                  data-src="{{ img | img_url: '1200x' }}"
+                  data-caption="{{ caption | escape }}"
+                  tabindex="0"
+                  role="button"
+                  aria-label="View image{% if caption != blank %}: {{ caption | escape }}{% endif %}"
+                {% elsif link_url != blank %}
+                  onclick="window.location.href='{{ link_url }}'"
+                  role="link"
+                  aria-label="{{ caption | default: 'Gallery image' | escape }}"
+                {% endif %}
+                {{ block.shopify_attributes }}
+              >
+                {%- if img != blank -%}
+                  <img
+                    class="cht-gal__img"
+                    src="{{ img | img_url: '600x' }}"
+                    alt="{{ img.alt | default: caption | default: 'Gallery image' | escape }}"
+                    loading="lazy"
+                    width="{{ img.width }}"
+                    height="{{ img.height }}"
+                  >
+                {%- else -%}
+                  {{ 'image' | placeholder_svg_tag: 'cht-gal__img' }}
+                {%- endif -%}
+
+                {%- if show_lightbox or link_url != blank -%}
+                  <div class="cht-gal__overlay" aria-hidden="true">
+                    <div class="cht-gal__overlay-icon">
+                      {%- if show_lightbox -%}
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                          <circle cx="11" cy="11" r="7"/>
+                          <path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/>
+                        </svg>
+                      {%- else -%}
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                          <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+                          <polyline points="15 3 21 3 21 9"/>
+                          <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                {%- endif -%}
+
+                {%- if show_captions and caption != blank -%}
+                  <div class="cht-gal__caption" aria-hidden="true">
+                    <span class="cht-gal__caption-text">{{ caption }}</span>
+                  </div>
+                {%- endif -%}
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+
+    {%- else -%}
+      {%- comment -%} Empty state — placeholder images {%- endcomment -%}
+      <div class="cht-gal__scroll">
+        <ul class="cht-gal__grid" role="list">
+          {%- for i in (1..6) -%}
+            <li class="cht-gal__card img-loaded">
+              {{ 'image' | placeholder_svg_tag: 'cht-gal__img' }}
+            </li>
+          {%- endfor -%}
+        </ul>
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{%- comment -%} Lightbox {%- endcomment -%}
+{%- if section.settings.enable_lightbox -%}
+<div class="cht-gal__lightbox" id="ChtLightbox-{{ section.id }}" aria-modal="true" role="dialog" aria-label="Image viewer">
+  <button class="cht-gal__lightbox-close" id="ChtLbClose-{{ section.id }}" aria-label="Close">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+      <path d="M18 6L6 18M6 6l12 12"/>
+    </svg>
+  </button>
+  <button class="cht-gal__lightbox-prev" id="ChtLbPrev-{{ section.id }}" aria-label="Previous image">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 18 9 12 15 6"/>
+    </svg>
+  </button>
+  <div class="cht-gal__lightbox-inner">
+    <img class="cht-gal__lightbox-img" id="ChtLbImg-{{ section.id }}" src="" alt="">
+  </div>
+  <button class="cht-gal__lightbox-next" id="ChtLbNext-{{ section.id }}" aria-label="Next image">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="9 18 15 12 9 6"/>
+    </svg>
+  </button>
+  <span class="cht-gal__lightbox-caption" id="ChtLbCaption-{{ section.id }}"></span>
+</div>
+{%- endif -%}
+
+<script>
+(function () {
+  'use strict';
+
+  var sectionId  = '{{ section.id }}';
+  var sectionEl  = document.getElementById('ChtGallery-' + sectionId);
+  var scrollEl   = document.getElementById('ChtGalScroll-' + sectionId);
+  if (!sectionEl) return;
+
+  /* ── Image loaded → remove shimmer ── */
+  sectionEl.querySelectorAll('.cht-gal__img').forEach(function (img) {
+    var card = img.closest('.cht-gal__card');
+    if (!card) return;
+    if (img.complete) {
+      card.classList.add('img-loaded');
+    } else {
+      img.addEventListener('load',  function () { card.classList.add('img-loaded'); });
+      img.addEventListener('error', function () { card.classList.add('img-loaded'); });
+    }
+  });
+
+  /* ── Drag-to-scroll ── */
+  if (scrollEl) {
+    var isDragging = false, startX, scrollLeft;
+
+    scrollEl.addEventListener('mousedown', function (e) {
+      isDragging = true;
+      scrollEl.classList.add('is-dragging');
+      startX     = e.pageX - scrollEl.offsetLeft;
+      scrollLeft = scrollEl.scrollLeft;
+    });
+
+    scrollEl.addEventListener('mouseleave', function () {
+      isDragging = false;
+      scrollEl.classList.remove('is-dragging');
+    });
+
+    scrollEl.addEventListener('mouseup', function () {
+      isDragging = false;
+      scrollEl.classList.remove('is-dragging');
+    });
+
+    scrollEl.addEventListener('mousemove', function (e) {
+      if (!isDragging) return;
+      e.preventDefault();
+      var x    = e.pageX - scrollEl.offsetLeft;
+      var walk = (x - startX) * 1.4;
+      scrollEl.scrollLeft = scrollLeft - walk;
+    });
+  }
+
+  /* ── Lightbox ── */
+  var lightboxEnabled = {{ section.settings.enable_lightbox | json }};
+  if (!lightboxEnabled) return;
+
+  var lightbox   = document.getElementById('ChtLightbox-' + sectionId);
+  var lbImg      = document.getElementById('ChtLbImg-' + sectionId);
+  var lbClose    = document.getElementById('ChtLbClose-' + sectionId);
+  var lbPrev     = document.getElementById('ChtLbPrev-' + sectionId);
+  var lbNext     = document.getElementById('ChtLbNext-' + sectionId);
+  var lbCaption  = document.getElementById('ChtLbCaption-' + sectionId);
+  if (!lightbox || !lbImg) return;
+
+  /* Collect all lightbox cards */
+  var cards = Array.from(sectionEl.querySelectorAll('.cht-gal__card[data-lightbox="true"]'));
+  var currentIndex = 0;
+
+  function openLightbox(index) {
+    currentIndex = index;
+    var card = cards[currentIndex];
+    if (!card) return;
+    lbImg.src = card.dataset.src || '';
+    lbImg.alt = card.dataset.caption || '';
+    if (lbCaption) {
+      lbCaption.textContent = card.dataset.caption
+        ? (currentIndex + 1) + ' / ' + cards.length + (card.dataset.caption ? '  •  ' + card.dataset.caption : '')
+        : (currentIndex + 1) + ' / ' + cards.length;
+    }
+    lightbox.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    lbClose && lbClose.focus();
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('is-open');
+    document.body.style.overflow = '';
+    lbImg.src = '';
+  }
+
+  function showPrev() {
+    currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+    openLightbox(currentIndex);
+  }
+
+  function showNext() {
+    currentIndex = (currentIndex + 1) % cards.length;
+    openLightbox(currentIndex);
+  }
+
+  /* Card click */
+  sectionEl.addEventListener('click', function (e) {
+    var card = e.target.closest('.cht-gal__card[data-lightbox="true"]');
+    if (!card) return;
+    e.preventDefault();
+    var index = parseInt(card.dataset.index, 10);
+    openLightbox(index);
+  });
+
+  /* Keyboard open */
+  sectionEl.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    var card = e.target.closest('.cht-gal__card[data-lightbox="true"]');
+    if (!card) return;
+    e.preventDefault();
+    openLightbox(parseInt(card.dataset.index, 10));
+  });
+
+  /* Controls */
+  lbClose && lbClose.addEventListener('click', closeLightbox);
+  lbPrev  && lbPrev.addEventListener('click', showPrev);
+  lbNext  && lbNext.addEventListener('click', showNext);
+
+  /* Click backdrop to close */
+  lightbox.addEventListener('click', function (e) {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  /* Keyboard nav */
+  document.addEventListener('keydown', function (e) {
+    if (!lightbox.classList.contains('is-open')) return;
+    if (e.key === 'Escape')     closeLightbox();
+    if (e.key === 'ArrowLeft')  showPrev();
+    if (e.key === 'ArrowRight') showNext();
+  });
+
+  /* Touch swipe */
+  var touchStartX = 0;
+  lightbox.addEventListener('touchstart', function (e) {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  lightbox.addEventListener('touchend', function (e) {
+    var diff = touchStartX - e.changedTouches[0].screenX;
+    if (Math.abs(diff) > 50) {
+      diff > 0 ? showNext() : showPrev();
+    }
+  }, { passive: true });
+
+})();
+</script>
+
+{% schema %}
+{
+  "name": "CHT Community Gallery",
+  "tag": "section",
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Gallery Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption (optional)"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link URL (if lightbox disabled)"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section heading",
+      "default": "Community Gallery"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_viewall",
+      "label": "Show View All link",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "viewall_label",
+      "label": "View All label",
+      "default": "View All"
+    },
+    {
+      "type": "url",
+      "id": "viewall_url",
+      "label": "View All URL"
+    },
+    {
+      "type": "header",
+      "content": "Grid Layout"
+    },
+    {
+      "type": "range",
+      "id": "columns_desktop",
+      "label": "Columns — Desktop",
+      "min": 3,
+      "max": 8,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "columns_tablet",
+      "label": "Columns — Tablet",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "columns_mobile",
+      "label": "Cards visible — Mobile",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "card_gap",
+      "label": "Gap between images",
+      "min": 4,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 10
+    },
+    {
+      "type": "select",
+      "id": "card_aspect",
+      "label": "Image aspect ratio",
+      "options": [
+        { "value": "1/1",  "label": "1:1 Square" },
+        { "value": "4/3",  "label": "4:3 Landscape" },
+        { "value": "3/4",  "label": "3:4 Portrait" },
+        { "value": "16/9", "label": "16:9 Wide" },
+        { "value": "3/2",  "label": "3:2" }
+      ],
+      "default": "4/3"
+    },
+    {
+      "type": "range",
+      "id": "card_radius",
+      "label": "Image border radius",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Features"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_lightbox",
+      "label": "Enable lightbox (click to enlarge)",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_captions",
+      "label": "Show caption on hover",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Padding top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Padding bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Font Sizes"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading — Desktop",
+      "min": 14,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading — Mobile",
+      "min": 13,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "viewall_color",
+      "label": "View All link color",
+      "default": "#E84C00"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Hover overlay color",
+      "default": "#00000055"
+    }
+  ],
+  "presets": [
+    {
+      "name": "CHT Community Gallery",
+      "blocks": [
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" }
+      ]
+    }
+  ]
+}
+{% endschema %}

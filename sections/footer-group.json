@@ -1,0 +1,290 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "custom_footer_J6K8K6": {
+      "type": "custom-footer",
+      "name": "CHT Footer",
+      "settings": {
+        "accent_color": "#e84c00",
+        "footer_bg": "#ffffff",
+        "text_color": "#111111",
+        "muted_color": "#666666",
+        "border_color": "#eeeeee",
+        "logo_image": "shopify://shop_images/ChatGPT_Image_Jun_12_2026_08_37_56_AM_634fec63-d4d1-49c6-bded-46e3fe2dc376.png",
+        "logo_accent": "CHT",
+        "logo_rest": "MINI",
+        "tagline": "Your ultimate destination for authentic anime & manga collectibles. 100% original, 100% passion.",
+        "social_facebook": "#",
+        "social_instagram": "#",
+        "social_twitter": "#",
+        "social_youtube": "",
+        "social_tiktok": "",
+        "show_newsletter": true,
+        "nl_title": "Stay in the Loop!",
+        "nl_sub": "Subscribe for exclusive deals, new arrivals, and anime updates.",
+        "nl_placeholder": "Enter your email address",
+        "nl_btn": "Subscribe Now",
+        "nl_character": "shopify://shop_images/Characters_with_poses_from_anime_202606111515.png",
+        "contact_email": "support@mangamint.com",
+        "contact_phone": "+880 1234-567890",
+        "contact_hours": "Mon - Fri: 10AM - 8PM\nSat - Sun: 11AM - 6PM",
+        "copyright": "© 2024 MANGA MINT. All Rights Reserved.",
+        "pay_visa": true,
+        "pay_mastercard": true,
+        "pay_amex": true,
+        "pay_paypal": true,
+        "pay_gpay": true,
+        "pay_applepay": false,
+        "col1_title": "Shop",
+        "col1_link1_label": "Manga",
+        "col1_link1_url": "",
+        "col1_link2_label": "Figures",
+        "col1_link2_url": "",
+        "col1_link3_label": "Collectibles",
+        "col1_link3_url": "",
+        "col1_link4_label": "Apparel",
+        "col1_link4_url": "",
+        "col1_link5_label": "Accessories",
+        "col1_link5_url": "",
+        "col1_link6_label": "Posters",
+        "col1_link6_url": "",
+        "col2_title": "Customer Service",
+        "col2_link1_label": "Track Order",
+        "col2_link1_url": "",
+        "col2_link2_label": "Shipping Info",
+        "col2_link2_url": "",
+        "col2_link3_label": "Returns & Exchanges",
+        "col2_link3_url": "",
+        "col2_link4_label": "FAQ",
+        "col2_link4_url": "",
+        "col2_link5_label": "Contact Us",
+        "col2_link5_url": "",
+        "col2_link6_label": "Size Guide",
+        "col2_link6_url": "",
+        "col3_title": "Company",
+        "col3_link1_label": "About Us",
+        "col3_link1_url": "",
+        "col3_link2_label": "Blog",
+        "col3_link2_url": "",
+        "col3_link3_label": "Careers",
+        "col3_link3_url": "",
+        "col3_link4_label": "Privacy Policy",
+        "col3_link4_url": "",
+        "col3_link5_label": "Terms of Service",
+        "col3_link5_url": "",
+        "col3_link6_label": "",
+        "col3_link6_url": "",
+        "col4_title": "Help & Support"
+      }
+    },
+    "footer_m9NzUG": {
+      "type": "footer",
+      "blocks": {
+        "group_H6VpwJ": {
+          "type": "group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 6,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "background_media": "none",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_radius": 0,
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_LWt8Pz": {
+              "type": "text",
+              "settings": {
+                "text": "<h2>Join our email list</h2>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "h4",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_f9CFLH": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Get exclusive deals and early access to new products.</p>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_LWt8Pz",
+            "text_f9CFLH"
+          ]
+        },
+        "email_signup_crihX7": {
+          "type": "email-signup",
+          "settings": {
+            "width": "fill",
+            "custom_width": 100,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "heading": "",
+            "heading_preset": "h3",
+            "border_style": "all",
+            "border_width": 1,
+            "border_radius": 100,
+            "input_type_preset": "paragraph",
+            "style_class": "button-unstyled",
+            "display_type": "arrow",
+            "label": "Sign up",
+            "integrated_button": true,
+            "button_type_preset": "paragraph",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "group_H6VpwJ",
+        "email_signup_crihX7"
+      ],
+      "disabled": true,
+      "name": "t:names.footer",
+      "settings": {
+        "section_width": "page-width",
+        "gap": 20,
+        "color_scheme": "scheme-1",
+        "padding-block-start": 30,
+        "padding-block-end": 30
+      }
+    },
+    "footer_utilities_jLGE8U": {
+      "type": "footer-utilities",
+      "blocks": {
+        "footer_copyright_jweRK8": {
+          "type": "footer-copyright",
+          "settings": {
+            "show_powered_by": true,
+            "font_size": "0.75rem",
+            "case": "none"
+          },
+          "blocks": {}
+        },
+        "footer_policy_list_VCdnpa": {
+          "type": "footer-policy-list",
+          "settings": {
+            "font_size": "0.75rem",
+            "case": "none"
+          },
+          "blocks": {}
+        },
+        "social_links_Ew63Kq": {
+          "type": "social-links",
+          "settings": {
+            "facebook_url": "https://www.facebook.com/",
+            "instagram_url": "https://www.instagram.com/",
+            "youtube_url": "https://www.youtube.com/",
+            "tiktok_url": "https://www.tiktok.com/",
+            "twitter_url": "https://x.com/",
+            "threads_url": "",
+            "linkedin_url": "",
+            "bluesky_url": "",
+            "snapchat_url": "",
+            "pinterest_url": "",
+            "tumblr_url": "",
+            "vimeo_url": "",
+            "custom_url": ""
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "footer_copyright_jweRK8",
+        "footer_policy_list_VCdnpa",
+        "social_links_Ew63Kq"
+      ],
+      "disabled": true,
+      "name": "t:names.utilities",
+      "settings": {
+        "section_width": "page-width",
+        "gap": 24,
+        "divider_thickness": 0,
+        "color_scheme": "",
+        "padding-block-start": 20,
+        "padding-block-end": 48
+      }
+    }
+  },
+  "order": [
+    "custom_footer_J6K8K6",
+    "footer_m9NzUG",
+    "footer_utilities_jLGE8U"
+  ]
+}

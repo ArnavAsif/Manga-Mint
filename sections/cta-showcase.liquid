@@ -1,0 +1,1249 @@
+{% comment %}
+  CHT MINI — Three Column Showcase Section
+  File: sections/cht-showcase.liquid
+{% endcomment %}
+
+{% style %}
+/* ============================================================
+   CHT Showcase — Three Column Layout
+   ============================================================ */
+
+.cht-sc *,
+.cht-sc *::before,
+.cht-sc *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+.cht-sc {
+  --sc-accent:        {{ section.settings.accent_color }};
+  --sc-bg:            {{ section.settings.section_bg }};
+  --sc-col-bg:        {{ section.settings.column_bg }};
+  --sc-border:        {{ section.settings.border_color }};
+  --sc-heading:       {{ section.settings.heading_color }};
+  --sc-title:         {{ section.settings.product_title_color }};
+  --sc-price:         {{ section.settings.price_color }};
+  --sc-meta:          {{ section.settings.meta_color }};
+  --sc-star:          {{ section.settings.star_color }};
+  --sc-viewall:       {{ section.settings.viewall_color }};
+  --sc-rank-bg:       {{ section.settings.rank_bg }};
+  --sc-rank-color:    {{ section.settings.rank_text_color }};
+  --sc-countdown-bg:  {{ section.settings.countdown_bg }};
+  --sc-countdown-num: {{ section.settings.countdown_num_color }};
+  --sc-countdown-lbl: {{ section.settings.countdown_label_color }};
+  --sc-btn-bg:        {{ section.settings.btn_bg }};
+  --sc-btn-color:     {{ section.settings.btn_text_color }};
+  --sc-btn-hover:     {{ section.settings.btn_hover_bg }};
+  --sc-heading-desk:  {{ section.settings.heading_size_desktop }}px;
+  --sc-heading-mob:   {{ section.settings.heading_size_mobile }}px;
+  --sc-title-desk:    {{ section.settings.title_size_desktop }}px;
+  --sc-title-mob:     {{ section.settings.title_size_mobile }}px;
+  --sc-price-desk:    {{ section.settings.price_size_desktop }}px;
+  --sc-price-mob:     {{ section.settings.price_size_mobile }}px;
+  --sc-meta-desk:     {{ section.settings.meta_size_desktop }}px;
+  --sc-meta-mob:      {{ section.settings.meta_size_mobile }}px;
+  --sc-transition:    .25s cubic-bezier(.4,0,.2,1);
+
+  background: var(--sc-bg);
+  padding: {{ section.settings.pad_top }}px 0 {{ section.settings.pad_bottom }}px;
+  width: 100%;
+}
+
+/* ── Inner ── */
+.cht-sc__inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 52px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: {{ section.settings.column_gap }}px;
+  align-items: start;
+}
+
+/* ══════════════════════════════════════
+   COLUMN SHARED
+══════════════════════════════════════ */
+.cht-sc__col {
+  background: var(--sc-col-bg);
+  border-radius: {{ section.settings.col_radius }}px;
+  padding: {{ section.settings.col_padding }}px;
+  border: 1px solid {{ section.settings.border_color }};
+}
+
+/* ── Column header ── */
+.cht-sc__col-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid {{ section.settings.border_color }};
+}
+
+.cht-sc__col-title {
+  font-size: var(--sc-heading-desk);
+  font-weight: 900;
+  color: var(--sc-heading);
+  text-transform: uppercase;
+  letter-spacing: -.01em;
+  line-height: 1.1;
+}
+
+.cht-sc__viewall {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--sc-viewall);
+  text-decoration: none;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  transition: opacity var(--sc-transition), gap var(--sc-transition);
+  flex-shrink: 0;
+}
+
+.cht-sc__viewall:hover { opacity: .75; gap: 6px; }
+.cht-sc__viewall svg { width: 13px; height: 13px; }
+
+/* ══════════════════════════════════════
+   COL 1 — NEW ARRIVALS (simple list)
+══════════════════════════════════════ */
+.cht-sc__list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+
+.cht-sc__item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background var(--sc-transition);
+}
+
+.cht-sc__item:hover { background: rgba(0,0,0,.04); }
+
+.cht-sc__item-img-wrap {
+  flex-shrink: 0;
+  width: 82px;
+  height: 82px;
+  border-radius: 7px;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,.08);
+}
+
+.cht-sc__item-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .4s ease;
+}
+
+.cht-sc__item:hover .cht-sc__item-img { transform: scale(1.07); }
+
+.cht-sc__item-info { flex: 1; min-width: 0; }
+
+.cht-sc__item-title {
+  font-size: var(--sc-title-desk);
+  font-weight: 700;
+  color: var(--sc-title);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  margin-bottom: 3px;
+  line-height: 1.3;
+  transition: color var(--sc-transition);
+}
+
+.cht-sc__item:hover .cht-sc__item-title { color: var(--sc-accent); }
+
+.cht-sc__item-price {
+  font-size: var(--sc-price-desk);
+  font-weight: 800;
+  color: var(--sc-price);
+  line-height: 1;
+}
+
+/* ══════════════════════════════════════
+   COL 2 — BEST SELLERS (ranked list)
+══════════════════════════════════════ */
+.cht-sc__ranked-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+
+.cht-sc__ranked-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--sc-transition);
+}
+
+.cht-sc__ranked-item:hover { background: rgba(0,0,0,.04); }
+
+/* Rank badge */
+.cht-sc__rank {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--sc-rank-bg);
+  color: var(--sc-rank-color);
+  font-size: 12px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.cht-sc__rank--top { background: var(--sc-accent); color: #fff; }
+
+.cht-sc__ranked-img-wrap {
+  flex-shrink: 0;
+  width: 82px;
+  height: 82px;
+  border-radius: 7px;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,.08);
+}
+
+.cht-sc__ranked-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .4s ease;
+}
+
+.cht-sc__ranked-item:hover .cht-sc__ranked-img { transform: scale(1.07); }
+
+.cht-sc__ranked-info { flex: 1; min-width: 0; }
+
+.cht-sc__ranked-title {
+  font-size: var(--sc-title-desk);
+  font-weight: 700;
+  color: var(--sc-title);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  margin-bottom: 3px;
+  transition: color var(--sc-transition);
+}
+
+.cht-sc__ranked-item:hover .cht-sc__ranked-title { color: var(--sc-accent); }
+
+.cht-sc__ranked-price {
+  font-size: var(--sc-price-desk);
+  font-weight: 800;
+  color: var(--sc-price);
+}
+
+.cht-sc__ranked-right {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: var(--sc-meta-desk);
+  font-weight: 700;
+  color: var(--sc-meta);
+  white-space: nowrap;
+}
+
+.cht-sc__star { color: var(--sc-star); }
+
+/* ══════════════════════════════════════
+   COL 3 — LIMITED EDITION (countdown)
+══════════════════════════════════════ */
+
+/* Countdown grid */
+.cht-sc__countdown {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.cht-sc__countdown-unit {
+  background: var(--sc-countdown-bg);
+  border-radius: 8px;
+  padding: 10px 6px 8px;
+  text-align: center;
+}
+
+.cht-sc__countdown-num {
+  display: block;
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--sc-countdown-num);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.02em;
+  font-feature-settings: "tnum";
+}
+
+.cht-sc__countdown-lbl {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--sc-countdown-lbl);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-top: 4px;
+}
+
+/* Featured product in col 3 */
+.cht-sc__featured {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-direction: row-reverse;
+    justify-content: center;
+}
+
+.cht-sc__featured-img-wrap {
+  flex-shrink: 0;
+  width: 250px;
+  height: 280px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,.08);
+  background: #f5f5f5;
+}
+
+.cht-sc__featured-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .45s ease;
+}
+
+.cht-sc__featured:hover .cht-sc__featured-img { transform: scale(1.05); }
+
+.cht-sc__featured-info { flex: 1; min-width: 0; }
+
+.cht-sc__featured-label {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--sc-meta);
+  margin-bottom: 4px;
+}
+
+.cht-sc__featured-name {
+  font-size: var(--sc-title-desk);
+  font-weight: 900;
+  color: var(--sc-title);
+  line-height: 1.3;
+  margin-bottom: 3px;
+  display: block;
+  text-decoration: none;
+  transition: color var(--sc-transition);
+}
+
+.cht-sc__featured-name:hover { color: var(--sc-accent); }
+
+.cht-sc__featured-sub {
+  font-size: var(--sc-meta-desk);
+  color: var(--sc-meta);
+  margin-bottom: 10px;
+}
+
+.cht-sc__featured-price {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--sc-accent);
+  line-height: 1;
+}
+
+/* CTA button */
+.cht-sc__cta {
+  display: block;
+  width: 100%;
+  padding: 13px 20px;
+  background: var(--sc-btn-bg);
+  color: var(--sc-btn-color);
+  border: none;
+  border-radius: 9px;
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--sc-transition), transform var(--sc-transition), opacity var(--sc-transition);
+  line-height: 1;
+}
+
+.cht-sc__cta:hover {
+  background: var(--sc-btn-hover);
+  transform: translateY(-1px);
+}
+
+.cht-sc__cta:active { transform: translateY(0); }
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+
+/* ── Tablet (≤1100px) ── */
+@media (max-width: 1100px) {
+  .cht-sc__inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    padding: 0 20px;
+  }
+
+  .cht-sc__col--limited {
+    grid-column: 1 / -1;
+  }
+
+  .cht-sc__featured {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
+  .cht-sc__featured-img-wrap {
+    width: 160px;
+    height: 180px;
+    flex-shrink: 0;
+  }
+}
+
+/* ── Mobile (≤768px) ── */
+@media (max-width: 768px) {
+  .cht-sc__inner {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 0 16px;
+  }
+
+  .cht-sc__col {
+    padding: 16px 14px;
+    min-width: 0;
+  }
+
+  .cht-sc__col--limited {
+    grid-column: auto;
+  }
+
+  /* Column header */
+  .cht-sc__col-header {
+    margin-bottom: 14px;
+  }
+
+  .cht-sc__col-title {
+    font-size: var(--sc-heading-mob);
+  }
+
+  /* Col 1 items */
+  .cht-sc__item {
+    gap: 10px;
+    padding: 7px 4px;
+  }
+
+  .cht-sc__item-img-wrap {
+    width: 58px;
+    height: 58px;
+    flex-shrink: 0;
+  }
+
+  .cht-sc__item-title {
+    font-size: var(--sc-title-mob);
+  }
+
+  .cht-sc__item-price {
+    font-size: var(--sc-price-mob);
+  }
+
+  /* Col 2 ranked */
+  .cht-sc__ranked-item {
+    gap: 8px;
+    padding: 6px 4px;
+  }
+
+  .cht-sc__ranked-img-wrap {
+    width: 58px;
+    height: 58px;
+    flex-shrink: 0;
+  }
+
+  .cht-sc__ranked-title {
+    font-size: var(--sc-title-mob);
+  }
+
+  .cht-sc__ranked-price {
+    font-size: var(--sc-price-mob);
+  }
+
+  .cht-sc__ranked-right {
+    font-size: var(--sc-meta-mob);
+  }
+
+  .cht-sc__rank {
+    width: 28px;
+    height: 28px;
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+
+  /* Col 3 countdown */
+  .cht-sc__countdown {
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .cht-sc__countdown-num {
+    font-size: 20px;
+  }
+
+  .cht-sc__countdown-lbl {
+    font-size: 9px;
+  }
+
+  /* Col 3 featured — always row on mobile */
+  .cht-sc__featured {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+
+  .cht-sc__featured-img-wrap {
+    width: 100px;
+    height: 110px;
+    flex-shrink: 0;
+  }
+
+  .cht-sc__featured-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .cht-sc__featured-name {
+    font-size: var(--sc-title-mob);
+  }
+
+  .cht-sc__featured-sub,
+  .cht-sc__featured-label {
+    font-size: var(--sc-meta-mob);
+  }
+
+  .cht-sc__featured-price {
+    font-size: 18px;
+  }
+
+  /* CTA */
+  .cht-sc__cta {
+    font-size: 13px;
+    padding: 12px 16px;
+  }
+}
+
+/* ── Small mobile (≤420px) ── */
+@media (max-width: 420px) {
+  .cht-sc__inner {
+    padding: 0 12px;
+    gap: 12px;
+  }
+
+  .cht-sc__col {
+    padding: 14px 12px;
+  }
+
+  .cht-sc__item-img-wrap,
+  .cht-sc__ranked-img-wrap {
+    width: 50px;
+    height: 50px;
+  }
+
+  .cht-sc__rank {
+    width: 24px;
+    height: 24px;
+    font-size: 10px;
+  }
+
+  /* Hide rating on very small screens */
+  .cht-sc__ranked-right {
+    display: none;
+  }
+
+  .cht-sc__countdown-num {
+    font-size: 17px;
+  }
+
+  .cht-sc__featured-img-wrap {
+    width: 85px;
+    height: 95px;
+  }
+
+  .cht-sc__featured-price {
+    font-size: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cht-sc__item-img,
+  .cht-sc__ranked-img,
+  .cht-sc__featured-img { transition: none !important; }
+}
+{% endstyle %}
+
+{%- liquid
+  assign col1_collection = collections[section.settings.col1_collection]
+  assign col2_collection = collections[section.settings.col2_collection]
+  assign col3_product    = all_products[section.settings.col3_product_handle]
+  assign col1_limit      = section.settings.col1_limit
+  assign col2_limit      = section.settings.col2_limit
+  assign show_countdown  = section.settings.show_countdown
+  assign countdown_end   = section.settings.countdown_end_date
+-%}
+
+<section
+  class="cht-sc"
+  id="ChtShowcase-{{ section.id }}"
+  data-section-id="{{ section.id }}"
+>
+  <div class="cht-sc__inner">
+
+    {%- comment -%}
+    ════════════════════════════════
+    COL 1 — NEW ARRIVALS
+    ════════════════════════════════
+    {%- endcomment -%}
+    <div class="cht-sc__col cht-sc__col--new">
+      <div class="cht-sc__col-header">
+        <h2 class="cht-sc__col-title">{{ section.settings.col1_title }}</h2>
+        {%- if section.settings.col1_show_viewall and col1_collection != blank -%}
+          <a href="{{ col1_collection.url }}" class="cht-sc__viewall">
+            View All
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        {%- endif -%}
+      </div>
+
+      {%- if col1_collection != blank and col1_collection.products_count > 0 -%}
+        <ul class="cht-sc__list" role="list">
+          {%- for product in col1_collection.products limit: col1_limit -%}
+            <li>
+              <a href="{{ product.url }}" class="cht-sc__item">
+                <div class="cht-sc__item-img-wrap">
+                  {%- if product.featured_image -%}
+                    <img
+                      class="cht-sc__item-img"
+                      src="{{ product.featured_image | img_url: '100x100', crop: 'center' }}"
+                      alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                      loading="lazy"
+                      width="52"
+                      height="52"
+                    >
+                  {%- else -%}
+                    {{ 'product-1' | placeholder_svg_tag: 'cht-sc__item-img' }}
+                  {%- endif -%}
+                </div>
+                <div class="cht-sc__item-info">
+                  <span class="cht-sc__item-title">{{ product.title }}</span>
+                  <span class="cht-sc__item-price">{{ product.price | money }}</span>
+                </div>
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- else -%}
+        <p style="color:#aaa;font-size:13px;padding:20px 0;text-align:center;">
+          Select a collection in theme editor.
+        </p>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%}
+    ════════════════════════════════
+    COL 2 — BEST SELLERS
+    ════════════════════════════════
+    {%- endcomment -%}
+    <div class="cht-sc__col cht-sc__col--best">
+      <div class="cht-sc__col-header">
+        <h2 class="cht-sc__col-title">{{ section.settings.col2_title }}</h2>
+        {%- if section.settings.col2_show_viewall and col2_collection != blank -%}
+          <a href="{{ col2_collection.url }}" class="cht-sc__viewall">
+            View All
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        {%- endif -%}
+      </div>
+
+      {%- if col2_collection != blank and col2_collection.products_count > 0 -%}
+        <ul class="cht-sc__ranked-list" role="list">
+          {%- for product in col2_collection.products limit: col2_limit -%}
+            {%- liquid
+              assign rank_num = forloop.index
+              assign is_top   = false
+              if rank_num <= 1
+                assign is_top = true
+              endif
+              assign rating_val = product.metafields.reviews.rating.value.rating
+              if rating_val == blank
+                assign rating_val = section.settings.default_rating
+              endif
+            -%}
+            <li>
+              <a href="{{ product.url }}" class="cht-sc__ranked-item">
+                {% comment %} <span class="cht-sc__rank{% if is_top %} cht-sc__rank--top{% endif %}">
+                  0{{ rank_num }}
+                </span> {% endcomment %}
+                <div class="cht-sc__ranked-img-wrap">
+                  {%- if product.featured_image -%}
+                    <img
+                      class="cht-sc__ranked-img"
+                      src="{{ product.featured_image | img_url: '100x100', crop: 'center' }}"
+                      alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                      loading="lazy"
+                      width="52"
+                      height="52"
+                    >
+                  {%- else -%}
+                    {{ 'product-1' | placeholder_svg_tag: 'cht-sc__ranked-img' }}
+                  {%- endif -%}
+                </div>
+                <div class="cht-sc__ranked-info">
+                  <span class="cht-sc__ranked-title">{{ product.title }}</span>
+                  <span class="cht-sc__ranked-price">{{ product.price | money }}</span>
+                </div>
+                {%- if section.settings.show_rating -%}
+                  <div class="cht-sc__ranked-right" aria-label="Rating {{ rating_val }}">
+                    <span class="cht-sc__star" aria-hidden="true">★</span>
+                    <span>{{ rating_val }}</span>
+                  </div>
+                {%- endif -%}
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- else -%}
+        <p style="color:#aaa;font-size:13px;padding:20px 0;text-align:center;">
+          Select a collection in theme editor.
+        </p>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%}
+    ════════════════════════════════
+    COL 3 — LIMITED EDITION
+    ════════════════════════════════
+    {%- endcomment -%}
+    <div class="cht-sc__col cht-sc__col--limited">
+      <div class="cht-sc__col-header">
+        <h2 class="cht-sc__col-title">{{ section.settings.col3_title }}</h2>
+        {%- if section.settings.col3_show_viewall and section.settings.col3_viewall_url != blank -%}
+          <a href="{{ section.settings.col3_viewall_url }}" class="cht-sc__viewall">
+            View All
+            <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} COUNTDOWN TIMER {%- endcomment -%}
+      {%- if show_countdown -%}
+        <div class="cht-sc__countdown" id="ChtCountdown-{{ section.id }}" data-end="{{ countdown_end }}">
+          <div class="cht-sc__countdown-unit">
+            <span class="cht-sc__countdown-num" id="ChtCd-days-{{ section.id }}">00</span>
+            <span class="cht-sc__countdown-lbl">Days</span>
+          </div>
+          <div class="cht-sc__countdown-unit">
+            <span class="cht-sc__countdown-num" id="ChtCd-hrs-{{ section.id }}">00</span>
+            <span class="cht-sc__countdown-lbl">Hours</span>
+          </div>
+          <div class="cht-sc__countdown-unit">
+            <span class="cht-sc__countdown-num" id="ChtCd-min-{{ section.id }}">00</span>
+            <span class="cht-sc__countdown-lbl">Mins</span>
+          </div>
+          <div class="cht-sc__countdown-unit">
+            <span class="cht-sc__countdown-num" id="ChtCd-sec-{{ section.id }}">00</span>
+            <span class="cht-sc__countdown-lbl">Secs</span>
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} FEATURED PRODUCT {%- endcomment -%}
+      {%- if col3_product != blank -%}
+        <div class="cht-sc__featured">
+          <a href="{{ col3_product.url }}" class="cht-sc__featured-img-wrap">
+            {%- if col3_product.featured_image -%}
+              <img
+                class="cht-sc__featured-img"
+                src="{{ col3_product.featured_image | img_url: '300x300', crop: 'center' }}"
+                alt="{{ col3_product.featured_image.alt | default: col3_product.title | escape }}"
+                loading="lazy"
+                width="110"
+                height="110"
+              >
+            {%- else -%}
+              {{ 'product-1' | placeholder_svg_tag: 'cht-sc__featured-img' }}
+            {%- endif -%}
+          </a>
+          <div class="cht-sc__featured-info">
+            <span class="cht-sc__featured-label">{{ section.settings.col3_product_label | default: 'Limited Edition' }}</span>
+            <a href="{{ col3_product.url }}" class="cht-sc__featured-name">{{ col3_product.title }}</a>
+            <p class="cht-sc__featured-sub">
+              {%- if section.settings.col3_product_sub != blank -%}
+                {{ section.settings.col3_product_sub }}
+              {%- elsif col3_product.product_type != blank -%}
+                {{ col3_product.product_type }}
+              {%- endif -%}
+            </p>
+            <span class="cht-sc__featured-price">{{ col3_product.price | money }}</span>
+          </div>
+        </div>
+        <a
+          href="{{ col3_product.url }}"
+          class="cht-sc__cta"
+          {% unless col3_product.available %}aria-disabled="true"{% endunless %}
+        >
+          {{ section.settings.col3_btn_label | default: 'Pre-Order Now' }}
+        </a>
+      {%- else -%}
+        <p style="color:#aaa;font-size:13px;padding:20px 0;text-align:center;">
+          Enter a product handle in theme editor.
+        </p>
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
+
+<script>
+(function () {
+  'use strict';
+
+  // ── Countdown Timer ───────────────────────────────────────
+  var cdEl = document.getElementById('ChtCountdown-{{ section.id }}');
+  if (!cdEl) return;
+
+  var endDateStr = cdEl.dataset.end;
+  if (!endDateStr) return;
+
+  var endTime = new Date(endDateStr).getTime();
+  if (isNaN(endTime)) return;
+
+  var elDays = document.getElementById('ChtCd-days-{{ section.id }}');
+  var elHrs  = document.getElementById('ChtCd-hrs-{{ section.id }}');
+  var elMin  = document.getElementById('ChtCd-min-{{ section.id }}');
+  var elSec  = document.getElementById('ChtCd-sec-{{ section.id }}');
+
+  function pad(n) { return n < 10 ? '0' + n : String(n); }
+
+  function tick() {
+    var now  = Date.now();
+    var diff = endTime - now;
+
+    if (diff <= 0) {
+      elDays.textContent = '00';
+      elHrs.textContent  = '00';
+      elMin.textContent  = '00';
+      elSec.textContent  = '00';
+      return;
+    }
+
+    var days = Math.floor(diff / 86400000);
+    diff -= days * 86400000;
+    var hrs = Math.floor(diff / 3600000);
+    diff -= hrs * 3600000;
+    var min = Math.floor(diff / 60000);
+    diff -= min * 60000;
+    var sec = Math.floor(diff / 1000);
+
+    elDays.textContent = pad(days);
+    elHrs.textContent  = pad(hrs);
+    elMin.textContent  = pad(min);
+    elSec.textContent  = pad(sec);
+
+    setTimeout(tick, 1000);
+  }
+
+  tick();
+})();
+</script>
+
+{% schema %}
+{
+  "name": "CHT Showcase",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Padding top",
+      "min": 0, "max": 120, "step": 4, "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Padding bottom",
+      "min": 0, "max": 120, "step": 4, "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "column_gap",
+      "label": "Column gap",
+      "min": 8, "max": 48, "step": 2, "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "col_radius",
+      "label": "Column border radius",
+      "min": 0, "max": 24, "step": 2, "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "col_padding",
+      "label": "Column inner padding",
+      "min": 8, "max": 40, "step": 2, "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "── COLUMN 1 — New Arrivals ──"
+    },
+    {
+      "type": "text",
+      "id": "col1_title",
+      "label": "Heading",
+      "default": "New Arrivals"
+    },
+    {
+      "type": "collection",
+      "id": "col1_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "col1_limit",
+      "label": "Products to show",
+      "min": 2, "max": 8, "step": 1,
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "col1_show_viewall",
+      "label": "Show View All",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "── COLUMN 2 — Best Sellers ──"
+    },
+    {
+      "type": "text",
+      "id": "col2_title",
+      "label": "Heading",
+      "default": "Best Sellers"
+    },
+    {
+      "type": "collection",
+      "id": "col2_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "col2_limit",
+      "label": "Products to show",
+      "min": 2, "max": 8, "step": 1,
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "col2_show_viewall",
+      "label": "Show View All",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show star rating",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "default_rating",
+      "label": "Fallback rating",
+      "default": "4.8"
+    },
+    {
+      "type": "header",
+      "content": "── COLUMN 3 — Limited Edition ──"
+    },
+    {
+      "type": "text",
+      "id": "col3_title",
+      "label": "Heading",
+      "default": "Limited Edition Collection"
+    },
+    {
+      "type": "checkbox",
+      "id": "col3_show_viewall",
+      "label": "Show View All",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "col3_viewall_url",
+      "label": "View All URL"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_countdown",
+      "label": "Show countdown timer",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "countdown_end_date",
+      "label": "Countdown end date (ISO format)",
+      "info": "Example: 2025-12-31T23:59:59",
+      "default": "2025-12-31T23:59:59"
+    },
+    {
+      "type": "text",
+      "id": "col3_product_handle",
+      "label": "Featured product handle",
+      "info": "Copy the handle from the product URL"
+    },
+    {
+      "type": "text",
+      "id": "col3_product_label",
+      "label": "Product label (e.g. Limited Edition)",
+      "default": "Limited Edition"
+    },
+    {
+      "type": "text",
+      "id": "col3_product_sub",
+      "label": "Product subtitle (optional)"
+    },
+    {
+      "type": "text",
+      "id": "col3_btn_label",
+      "label": "Button label",
+      "default": "Pre-Order Now"
+    },
+    {
+      "type": "header",
+      "content": "Font Sizes — Desktop"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Column headings",
+      "min": 13, "max": 32, "step": 1, "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "title_size_desktop",
+      "label": "Product title",
+      "min": 11, "max": 22, "step": 1, "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "price_size_desktop",
+      "label": "Price",
+      "min": 11, "max": 22, "step": 1, "unit": "px",
+      "default": 13
+    },
+    {
+      "type": "range",
+      "id": "meta_size_desktop",
+      "label": "Meta / rating",
+      "min": 10, "max": 18, "step": 1, "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "header",
+      "content": "Font Sizes — Mobile"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Column headings",
+      "min": 12, "max": 26, "step": 1, "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "title_size_mobile",
+      "label": "Product title",
+      "min": 10, "max": 18, "step": 1, "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "price_size_mobile",
+      "label": "Price",
+      "min": 10, "max": 18, "step": 1, "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "meta_size_mobile",
+      "label": "Meta / rating",
+      "min": 9, "max": 16, "step": 1, "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "section_bg",
+      "label": "Section background",
+      "default": "#f8f8f8"
+    },
+    {
+      "type": "color",
+      "id": "column_bg",
+      "label": "Column background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Column border",
+      "default": "#eeeeee"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#E84C00"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Column heading color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "product_title_color",
+      "label": "Product title color",
+      "default": "#111111"
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Price color",
+      "default": "#E84C00"
+    },
+    {
+      "type": "color",
+      "id": "meta_color",
+      "label": "Meta / subtitle color",
+      "default": "#888888"
+    },
+    {
+      "type": "color",
+      "id": "star_color",
+      "label": "Star color",
+      "default": "#E84C00"
+    },
+    {
+      "type": "color",
+      "id": "viewall_color",
+      "label": "View All link color",
+      "default": "#E84C00"
+    },
+    {
+      "type": "header",
+      "content": "Rank Badge (Col 2)"
+    },
+    {
+      "type": "color",
+      "id": "rank_bg",
+      "label": "Rank badge background",
+      "default": "#f0f0f0"
+    },
+    {
+      "type": "color",
+      "id": "rank_text_color",
+      "label": "Rank badge text",
+      "default": "#555555"
+    },
+    {
+      "type": "header",
+      "content": "Countdown Timer (Col 3)"
+    },
+    {
+      "type": "color",
+      "id": "countdown_bg",
+      "label": "Countdown unit background",
+      "default": "#fff3ee"
+    },
+    {
+      "type": "color",
+      "id": "countdown_num_color",
+      "label": "Countdown number color",
+      "default": "#E84C00"
+    },
+    {
+      "type": "color",
+      "id": "countdown_label_color",
+      "label": "Countdown label color",
+      "default": "#888888"
+    },
+    {
+      "type": "header",
+      "content": "CTA Button (Col 3)"
+    },
+    {
+      "type": "color",
+      "id": "btn_bg",
+      "label": "Button background",
+      "default": "#E84C00"
+    },
+    {
+      "type": "color",
+      "id": "btn_text_color",
+      "label": "Button text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "btn_hover_bg",
+      "label": "Button hover background",
+      "default": "#c43e00"
+    }
+  ],
+  "presets": [
+    {
+      "name": "CHT Showcase"
+    }
+  ]
+}
+{% endschema %}

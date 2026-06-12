@@ -1,0 +1,635 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "custom_hero_BnbUKW": {
+      "type": "custom-hero",
+      "blocks": {
+        "slide_6kjrxa": {
+          "type": "slide",
+          "settings": {
+            "slide_accent_color": "#e84c00",
+            "content_position": "left",
+            "bg_color": "#0a0e2a",
+            "bg_image": "shopify://shop_images/make_it_more_brighter_and_202606111242.jpg",
+            "bg_image_mobile": "shopify://shop_images/make_it_for_mobile_now_202606111243.jpg",
+            "overlay_color": "#000000",
+            "overlay_opacity": 10,
+            "text_color": "#ffffff",
+            "eyebrow": "Featured Collection",
+            "heading_line1": "The Best of",
+            "heading_line2": "Naruto!!",
+            "heading_size_desktop": 80,
+            "heading_size_mobile": 34,
+            "subheading": "Relive the passion. Collect the victory.",
+            "subtext_size_desktop": 18,
+            "subtext_size_mobile": 14,
+            "btn1_label": "Shop Manga",
+            "btn1_url": "",
+            "btn1_color": "#e84c00",
+            "btn1_text_color": "#ffffff",
+            "btn2_label": "Explore Collections",
+            "btn2_url": "",
+            "feature_icon_color": "#e84c00",
+            "feat1_icon": "shield",
+            "feat1_title": "100%",
+            "feat1_sub": "Original Products",
+            "feat2_icon": "truck",
+            "feat2_title": "Worldwide",
+            "feat2_sub": "Shipping",
+            "feat3_icon": "clock",
+            "feat3_title": "24/7",
+            "feat3_sub": "Customer Support",
+            "feat4_icon": "lock",
+            "feat4_title": "Secure",
+            "feat4_sub": "Payments",
+            "badge_value": "",
+            "badge_label": "",
+            "badge_bg": "#ffffff",
+            "badge_border_color": "#dddddd",
+            "badge_text_color": "#111111"
+          }
+        },
+        "slide_6YbAbD": {
+          "type": "slide",
+          "settings": {
+            "slide_accent_color": "#338984",
+            "content_position": "left",
+            "bg_color": "#f2f2f2",
+            "bg_image": "shopify://shop_images/different_character_with_diffect_pose_202606111211.jpg",
+            "bg_image_mobile": "shopify://shop_images/make_it_for_mobile_now_202606111243_1.jpg",
+            "overlay_color": "#000000",
+            "overlay_opacity": 10,
+            "text_color": "#ffffff",
+            "eyebrow": "Featured Collection",
+            "heading_line1": "The Best of",
+            "heading_line2": "Demon Slayer!!!",
+            "heading_size_desktop": 76,
+            "heading_size_mobile": 34,
+            "subheading": "Relive the passion. Collect the victory.",
+            "subtext_size_desktop": 17,
+            "subtext_size_mobile": 14,
+            "btn1_label": "Shop Manga",
+            "btn1_url": "",
+            "btn1_color": "#338984",
+            "btn1_text_color": "#ffffff",
+            "btn2_label": "Explore Collections",
+            "btn2_url": "",
+            "feature_icon_color": "#338984",
+            "feat1_icon": "shield",
+            "feat1_title": "100%",
+            "feat1_sub": "Original Products",
+            "feat2_icon": "truck",
+            "feat2_title": "Worldwide",
+            "feat2_sub": "Shipping",
+            "feat3_icon": "clock",
+            "feat3_title": "24/7",
+            "feat3_sub": "Customer Support",
+            "feat4_icon": "lock",
+            "feat4_title": "Secure",
+            "feat4_sub": "Payments",
+            "badge_value": "",
+            "badge_label": "Rating",
+            "badge_bg": "#ffffff",
+            "badge_border_color": "#dddddd",
+            "badge_text_color": "#111111"
+          }
+        },
+        "slide_cHtYbf": {
+          "type": "slide",
+          "settings": {
+            "slide_accent_color": "#454180",
+            "content_position": "left",
+            "bg_color": "#0a0e2a",
+            "bg_image": "shopify://shop_images/now_change_the_color_of_202606111204.jpg",
+            "bg_image_mobile": "shopify://shop_images/make_it_for_mobile_now_202606111244.jpg",
+            "overlay_color": "#000000",
+            "overlay_opacity": 10,
+            "text_color": "#ffffff",
+            "eyebrow": "Featured Collection",
+            "heading_line1": "The Best of",
+            "heading_line2": "JJK!!",
+            "heading_size_desktop": 80,
+            "heading_size_mobile": 34,
+            "subheading": "Relive the passion. Collect the victory.",
+            "subtext_size_desktop": 18,
+            "subtext_size_mobile": 14,
+            "btn1_label": "Shop Manga",
+            "btn1_url": "",
+            "btn1_color": "#454180",
+            "btn1_text_color": "#ffffff",
+            "btn2_label": "Explore Collections",
+            "btn2_url": "",
+            "feature_icon_color": "#454180",
+            "feat1_icon": "shield",
+            "feat1_title": "100%",
+            "feat1_sub": "Original Products",
+            "feat2_icon": "truck",
+            "feat2_title": "Worldwide",
+            "feat2_sub": "Shipping",
+            "feat3_icon": "clock",
+            "feat3_title": "24/7",
+            "feat3_sub": "Customer Support",
+            "feat4_icon": "lock",
+            "feat4_title": "Secure",
+            "feat4_sub": "Payments",
+            "badge_value": "",
+            "badge_label": "",
+            "badge_bg": "#ffffff",
+            "badge_border_color": "#dddddd",
+            "badge_text_color": "#111111"
+          }
+        }
+      },
+      "block_order": [
+        "slide_6kjrxa",
+        "slide_6YbAbD",
+        "slide_cHtYbf"
+      ],
+      "name": "CHT Hero Slider",
+      "settings": {
+        "global_accent_color": "#e84c00",
+        "hero_height_desktop": 800,
+        "hero_height_mobile": 650,
+        "autoplay": true,
+        "autoplay_speed": 4,
+        "show_arrows": false,
+        "show_dots": false,
+        "show_counter": false,
+        "show_progress": false,
+        "show_service_bar": true,
+        "service_bar_bg": "#ffffff",
+        "service_icon_color": "#e84c00",
+        "service_text_color": "#111111",
+        "service_sub_color": "#888888",
+        "service1_icon": "shield",
+        "service1_title": "100%",
+        "service1_sub": "Original Products",
+        "service2_icon": "truck",
+        "service2_title": "Worldwide",
+        "service2_sub": "Shipping",
+        "service3_icon": "clock",
+        "service3_title": "24/7",
+        "service3_sub": "Customer Support",
+        "service4_icon": "lock",
+        "service4_title": "Secure",
+        "service4_sub": "Payments"
+      }
+    },
+    "category_section_PGKCB7": {
+      "type": "category-section",
+      "blocks": {
+        "category_gMwWp8": {
+          "type": "category",
+          "settings": {
+            "category_image": "shopify://shop_images/manga_cover_for_attack_on_202606111540.jpg",
+            "category_name": "Manga",
+            "category_sub": "Books & Series",
+            "category_url": ""
+          }
+        },
+        "category_xadYCc": {
+          "type": "category",
+          "settings": {
+            "category_image": "shopify://shop_images/anime_figure_for_luffy_2K_202606111536.jpg",
+            "category_name": "Figures",
+            "category_sub": "collaborator",
+            "category_url": ""
+          }
+        },
+        "category_bnWj7t": {
+          "type": "category",
+          "settings": {
+            "category_image": "shopify://shop_images/poster_for_naruto_2K_202606111540.jpg",
+            "category_name": "Poster",
+            "category_sub": "Wall Art",
+            "category_url": ""
+          }
+        },
+        "category_BEjBgn": {
+          "type": "category",
+          "settings": {
+            "category_image": "shopify://shop_images/need_this_img_2K_202606111543.jpg",
+            "category_name": "Apparel",
+            "category_sub": "Clothing",
+            "category_url": ""
+          }
+        },
+        "category_3CHPbM": {
+          "type": "category",
+          "settings": {
+            "category_image": "shopify://shop_images/just_make_this_hd_202606111557.jpg",
+            "category_name": "Accessories",
+            "category_sub": "Bags , Keychains",
+            "category_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "category_gMwWp8",
+        "category_xadYCc",
+        "category_bnWj7t",
+        "category_BEjBgn",
+        "category_3CHPbM"
+      ],
+      "name": "CHT Category Slider",
+      "settings": {
+        "heading": "Shop By Category",
+        "view_all_url": "",
+        "view_all_label": "View All Categories",
+        "accent_color": "#e84c00",
+        "section_bg": "#ffffff",
+        "card_bg": "#f4f4f4",
+        "title_color": "#111111",
+        "sub_color": "#888888",
+        "section_padding_top": 40,
+        "section_padding_bottom": 40
+      }
+    },
+    "feature_product_custom_PqVKHY": {
+      "type": "feature-product-custom",
+      "name": "CHT Featured Products",
+      "settings": {
+        "section_title": "Trending Manga Series",
+        "collection": "frontpage",
+        "products_limit": 6,
+        "show_viewall": true,
+        "viewall_label": "View All",
+        "columns_desktop": 6,
+        "columns_tablet": 3,
+        "columns_mobile": 2,
+        "card_gap": 18,
+        "card_radius": 10,
+        "section_padding_top": 48,
+        "section_padding_bottom": 48,
+        "show_badge": true,
+        "badge_label": "Popular",
+        "show_rating": true,
+        "default_rating": "4.8",
+        "show_wishlist": true,
+        "show_compare_price": true,
+        "heading_size_desktop": 28,
+        "product_title_size_desktop": 14,
+        "price_size_desktop": 15,
+        "meta_size_desktop": 12,
+        "heading_size_mobile": 17,
+        "product_title_size_mobile": 12,
+        "price_size_mobile": 13,
+        "meta_size_mobile": 11,
+        "section_bg": "#ffffff",
+        "section_title_color": "#111111",
+        "card_bg": "#ffffff",
+        "accent_color": "#e84c00",
+        "product_title_color": "#111111",
+        "meta_color": "#888888",
+        "price_color": "#e84c00",
+        "star_color": "#e84c00",
+        "viewall_color": "#e84c00",
+        "badge_bg": "#e84c00",
+        "badge_text_color": "#ffffff",
+        "btn_bg": "#e84c00",
+        "btn_text_color": "#ffffff",
+        "btn_hover_bg": "#c43e00"
+      }
+    },
+    "anime_universe_RKniFP": {
+      "type": "anime-universe",
+      "blocks": {
+        "universe_card_LbTrNg": {
+          "type": "universe_card",
+          "settings": {
+            "card_title": "Naruto",
+            "card_image": "shopify://shop_images/dont_change_anything.._just_adjust_202606120924.jpg",
+            "card_url": "",
+            "shop_label": "Shop Now"
+          }
+        },
+        "universe_card_knHNzF": {
+          "type": "universe_card",
+          "settings": {
+            "card_title": "One Piece",
+            "card_image": "shopify://shop_images/dont_change_anything.._just_adjust_202606120923_1.jpg",
+            "card_url": "",
+            "shop_label": "Shop Now"
+          }
+        },
+        "universe_card_yrKyf7": {
+          "type": "universe_card",
+          "settings": {
+            "card_title": "Demon Slayer",
+            "card_image": "shopify://shop_images/dont_change_anything.._just_adjust_202606120923.jpg",
+            "card_url": "",
+            "shop_label": "Shop Now"
+          }
+        },
+        "universe_card_i9TxLw": {
+          "type": "universe_card",
+          "settings": {
+            "card_title": "Attack on Titan",
+            "card_image": "shopify://shop_images/dont_change_anything.._just_adjust_202606120919.jpg",
+            "card_url": "",
+            "shop_label": "Shop Now"
+          }
+        }
+      },
+      "block_order": [
+        "universe_card_LbTrNg",
+        "universe_card_knHNzF",
+        "universe_card_yrKyf7",
+        "universe_card_i9TxLw"
+      ],
+      "name": "CHT Anime Universes",
+      "settings": {
+        "section_heading": "Featured Anime Universes",
+        "show_explore": true,
+        "explore_label": "Explore All Universes",
+        "explore_url": "",
+        "columns_desktop": 4,
+        "columns_tablet": 2,
+        "columns_mobile": 2,
+        "card_gap": 12,
+        "card_aspect": "4/3",
+        "card_radius": 12,
+        "pad_top": 40,
+        "pad_bottom": 40,
+        "logo_height_desktop": 44,
+        "logo_height_mobile": 28,
+        "heading_size_desktop": 28,
+        "heading_size_mobile": 16,
+        "shop_size_desktop": 13,
+        "shop_size_mobile": 11,
+        "section_bg": "#ffffff",
+        "heading_color": "#111111",
+        "explore_color": "#e84c00",
+        "shop_now_color": "#e84c00",
+        "overlay_start": "#00000099",
+        "overlay_end": "rgba(0,0,0,0)"
+      }
+    },
+    "cta_showcase_izfEg8": {
+      "type": "cta-showcase",
+      "custom_css": [
+        "span {font-family: \"Bubble_Sans\", sans-serif;}"
+      ],
+      "name": "CHT Showcase",
+      "settings": {
+        "pad_top": 40,
+        "pad_bottom": 40,
+        "column_gap": 20,
+        "col_radius": 12,
+        "col_padding": 20,
+        "col1_title": "New Arrivals",
+        "col1_collection": "frontpage",
+        "col1_limit": 4,
+        "col1_show_viewall": true,
+        "col2_title": "Best Sellers",
+        "col2_collection": "figure",
+        "col2_limit": 4,
+        "col2_show_viewall": true,
+        "show_rating": true,
+        "default_rating": "4.8",
+        "col3_title": "Limited Edition Collection",
+        "col3_show_viewall": true,
+        "col3_viewall_url": "#",
+        "show_countdown": true,
+        "countdown_end_date": "2026-12-31T23:59:59",
+        "col3_product_handle": "one-piece-vol-108",
+        "col3_product_label": "Limited Edition",
+        "col3_product_sub": "",
+        "col3_btn_label": "Pre-Order Now",
+        "heading_size_desktop": 18,
+        "title_size_desktop": 16,
+        "price_size_desktop": 13,
+        "meta_size_desktop": 12,
+        "heading_size_mobile": 15,
+        "title_size_mobile": 12,
+        "price_size_mobile": 12,
+        "meta_size_mobile": 11,
+        "section_bg": "#f8f8f8",
+        "column_bg": "#ffffff",
+        "border_color": "#eeeeee",
+        "accent_color": "#e84c00",
+        "heading_color": "#111111",
+        "product_title_color": "#111111",
+        "price_color": "#e84c00",
+        "meta_color": "#888888",
+        "star_color": "#e84c00",
+        "viewall_color": "#e84c00",
+        "rank_bg": "#f0f0f0",
+        "rank_text_color": "#555555",
+        "countdown_bg": "#fff3ee",
+        "countdown_num_color": "#e84c00",
+        "countdown_label_color": "#888888",
+        "btn_bg": "#e84c00",
+        "btn_text_color": "#ffffff",
+        "btn_hover_bg": "#c43e00"
+      }
+    },
+    "figure_showcase_a8RP4X": {
+      "type": "figure-showcase",
+      "disabled": true,
+      "name": "CHT Figure Showcase",
+      "settings": {
+        "section_title": "Anime Figure Showcase",
+        "collection": "frontpage",
+        "products_limit": 6,
+        "show_viewall": true,
+        "viewall_label": "View All Figures",
+        "columns_desktop": 6,
+        "columns_tablet": 4,
+        "columns_mobile": 3,
+        "card_gap": 14,
+        "img_aspect": "3/4",
+        "img_fit": "contain",
+        "card_radius": 12,
+        "show_badge": true,
+        "show_compare": true,
+        "pad_top": 40,
+        "pad_bottom": 40,
+        "heading_size_desktop": 20,
+        "title_size_desktop": 13,
+        "price_size_desktop": 13,
+        "heading_size_mobile": 16,
+        "title_size_mobile": 11,
+        "price_size_mobile": 11,
+        "section_bg": "#ffffff",
+        "card_bg": "#ffffff",
+        "card_border_color": "#eeeeee",
+        "img_bg": "#f5f5f5",
+        "accent_color": "#e84c00",
+        "heading_color": "#111111",
+        "title_color": "#111111",
+        "price_color": "#111111",
+        "viewall_color": "#e84c00",
+        "btn_bg": "#e84c00",
+        "btn_icon_color": "#ffffff",
+        "btn_hover_bg": "#c43e00"
+      }
+    },
+    "feature_product_custom_NYmqyt": {
+      "type": "feature-product-custom",
+      "name": "CHT Featured Products",
+      "settings": {
+        "section_title": "Anime Figure Showcase",
+        "collection": "figure",
+        "products_limit": 4,
+        "show_viewall": true,
+        "viewall_label": "View All",
+        "columns_desktop": 4,
+        "columns_tablet": 3,
+        "columns_mobile": 2,
+        "card_gap": 18,
+        "card_radius": 10,
+        "section_padding_top": 48,
+        "section_padding_bottom": 48,
+        "show_badge": true,
+        "badge_label": "Popular",
+        "show_rating": true,
+        "default_rating": "4.8",
+        "show_wishlist": true,
+        "show_compare_price": true,
+        "heading_size_desktop": 28,
+        "product_title_size_desktop": 14,
+        "price_size_desktop": 15,
+        "meta_size_desktop": 12,
+        "heading_size_mobile": 17,
+        "product_title_size_mobile": 12,
+        "price_size_mobile": 13,
+        "meta_size_mobile": 11,
+        "section_bg": "#ffffff",
+        "section_title_color": "#111111",
+        "card_bg": "#ffffff",
+        "accent_color": "#e84c00",
+        "product_title_color": "#111111",
+        "meta_color": "#888888",
+        "price_color": "#e84c00",
+        "star_color": "#e84c00",
+        "viewall_color": "#e84c00",
+        "badge_bg": "#e84c00",
+        "badge_text_color": "#ffffff",
+        "btn_bg": "#e84c00",
+        "btn_text_color": "#ffffff",
+        "btn_hover_bg": "#c43e00"
+      }
+    },
+    "community_section_aNpNH6": {
+      "type": "community-section",
+      "blocks": {
+        "image_6JtVhT": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Anime_merchandise_unboxing_moment__collector_202606121121.jpg",
+            "caption": "",
+            "link_url": ""
+          }
+        },
+        "image_wVMWen": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Professional_female_anime_cosplayer_posing_202606121117.jpg",
+            "caption": "",
+            "link_url": ""
+          }
+        },
+        "image_kerRbr": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Young_couple_inside_their_anime-themed_202606121116.jpg",
+            "caption": "",
+            "link_url": ""
+          }
+        },
+        "image_i6eddW": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Beautiful_female_Naruto-inspired_cosplayer_sitting_202606121115.jpg",
+            "caption": "",
+            "link_url": ""
+          }
+        },
+        "image_jgmMJy": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Professional_anime_cosplayer_posing_in_202606121122.jpg",
+            "caption": "",
+            "link_url": ""
+          }
+        },
+        "image_W6ATNC": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Young_anime_collector_standing_proudly_202606121113.jpg",
+            "caption": "",
+            "link_url": ""
+          }
+        },
+        "image_mdrADR": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Young_anime_collector_standing_proudly_202606121113_1.jpg",
+            "caption": "",
+            "link_url": ""
+          }
+        },
+        "image_Xg3rUb": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Modern_gaming_room_with_anime_202606121120.jpg",
+            "caption": "",
+            "link_url": ""
+          }
+        }
+      },
+      "block_order": [
+        "image_6JtVhT",
+        "image_wVMWen",
+        "image_kerRbr",
+        "image_i6eddW",
+        "image_jgmMJy",
+        "image_W6ATNC",
+        "image_mdrADR",
+        "image_Xg3rUb"
+      ],
+      "name": "CHT Community Gallery",
+      "settings": {
+        "section_title": "Community Gallery",
+        "show_viewall": true,
+        "viewall_label": "View All",
+        "viewall_url": "",
+        "columns_desktop": 4,
+        "columns_tablet": 4,
+        "columns_mobile": 4,
+        "card_gap": 10,
+        "card_aspect": "4/3",
+        "card_radius": 12,
+        "enable_lightbox": true,
+        "show_captions": true,
+        "pad_top": 40,
+        "pad_bottom": 40,
+        "heading_size_desktop": 28,
+        "heading_size_mobile": 16,
+        "section_bg": "#ffffff",
+        "heading_color": "#111111",
+        "viewall_color": "#e84c00",
+        "overlay_color": "#00000054"
+      }
+    }
+  },
+  "order": [
+    "custom_hero_BnbUKW",
+    "category_section_PGKCB7",
+    "feature_product_custom_PqVKHY",
+    "anime_universe_RKniFP",
+    "cta_showcase_izfEg8",
+    "figure_showcase_a8RP4X",
+    "feature_product_custom_NYmqyt",
+    "community_section_aNpNH6"
+  ]
+}
